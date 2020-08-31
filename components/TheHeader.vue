@@ -1,9 +1,8 @@
 <template>
   <div class="header">
-    <v-app id="inspire" class="v_header">
+    <v-app id="inspire" class="vHeader">
       <v-card
-        class="header_space"
-        :key="j"
+        class="headerSpace"
         :class="`d-flex justify-space-between mb-6`"
         color="blue lighten-4"
         :height="100"
