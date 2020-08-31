@@ -6,27 +6,19 @@
         :class="`d-flex justify-space-between mb-6`"
         color="blue lighten-4"
         :height="100"
-        >
+        tile>
         <nuxt-link to="">
-        <v-img src="https://picsum.photos/510/300?random" width="100" height="100"></v-img>
+          <v-img src="https://picsum.photos/510/300?random" width="100" height="100"></v-img>
         </nuxt-link>
-          <div id="chatchPhrase">
-            <h1>タイトル(予定地)</h1>
-          </div>
-          <v-btn :height="100" :width="100" tile>Menu</v-btn>
-        </v-card>
+        <h1>タイトル(予定地)</h1>
+        <v-btn :height="100" :width="100" tile>Menu</v-btn>
+      </v-card>
     </v-app>
   </div>
 </template>
 
 <script>
-export default {
-  methods: {
-    AcsTop: {
-
-    }
-  }
-}
+export default {}
 </script>
 
 <style scoped>
@@ -34,7 +26,7 @@ h1 {
   color: black;
   margin: 25px;
 }
-.v_header {
+.vHeader {
   background-color: white;
 }
 </style>>
