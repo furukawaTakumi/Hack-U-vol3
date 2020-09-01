@@ -1,6 +1,5 @@
 <template>
   <div class="header">
-    <v-app id="inspire" class="vHeader">
       <v-card
         class="headerSpace"
         :class="`d-flex justify-space-between mb-6`"
@@ -13,7 +12,6 @@
         <h1>タイトル(予定地)</h1>
         <v-btn :height="100" :width="100" tile>Menu</v-btn>
       </v-card>
-    </v-app>
   </div>
 </template>
 
