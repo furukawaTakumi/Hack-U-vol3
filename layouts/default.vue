@@ -1,19 +1,19 @@
 <template>
-  <div>
-    <TheFileSelector />
+  <v-app class="vApp">
     <nuxt />
     <the-footer />
-  </div>
+  </v-app>
 </template>
 
 <script>
-import TheFileSelector from '@/components/TheFileSelector'
 import TheFooter from '@/components/TheFooter'
 
 export default {
   components: {
-    TheFileSelector,
     TheFooter
   }
 }
 </script>
+
+<style scoped>
+</style>
