@@ -1,7 +1,6 @@
 <template>
-  <div class="header">
+  <div>
       <v-card
-        class="headerSpace"
         :class="`d-flex justify-space-between mb-6`"
         color="blue lighten-4"
         :height="100"
@@ -23,8 +22,5 @@ export default {}
 h1 {
   color: black;
   margin: 25px;
-}
-.vHeader {
-  background-color: white;
 }
 </style>>
