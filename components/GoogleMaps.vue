@@ -1,35 +1,32 @@
 <template>
-  <div id="map"></div>
+  <div :id="googleMapId" class="google-map" />
 </template>
 
 <script>
-
 export default {
   data () {
     return {
+      googleMapId: this.$uuid.v4(),
       googleMap: null
     }
   },
   mounted () {
-    window.initMap = function () {
+    window.addEventListener('load', () => {
+      const mapElem = document.getElementById(this.googleMapId)
       /* eslint-disable */ // google の変数が未定義エラーとして怒られるため。
-      this.googleMap = new google.maps.Map(document.getElementById('map'), { 
+      this.googleMap = new google.maps.Map(mapElem, {
         center: { lat: -34.397, lng: 150.644 },
         zoom: 4
-      })
+      } )
       /* eslint-enable */
-    }
+    })
   },
   methods: {
-    private () {
-      return {
-      }
-    }
   },
   head () {
     return {
       script: [
-        { src: `https://maps.googleapis.com/maps/api/js?key=${process.env.NUXT_ENV_GMAP_API_KEY}&callback=initMap`, defer: true }
+        { src: `https://maps.googleapis.com/maps/api/js?key=${process.env.NUXT_ENV_GMAP_API_KEY}` }
       ]
     }
   }
@@ -37,8 +34,9 @@ export default {
 </script>
 
 <style scoped>
-#map {
-  width: 300px;
-  height: 300px;
+.google-map {
+  /* 大きさは親要素で指定 */
+  width: 100%;
+  height: 100%;
 }
 </style>
