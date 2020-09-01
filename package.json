@@ -12,7 +12,8 @@
     "lint": "npm run lint:js"
   },
   "dependencies": {
-    "nuxt": "^2.13.0"
+    "nuxt": "^2.13.0",
+    "vue-uuid": "^2.0.2"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.0.0",
