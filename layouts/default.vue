@@ -1,16 +1,16 @@
 <template>
   <div>
-    <TheArrowSigh />
+    <ArrowSighs />
     <Nuxt />
     <the-footer />
   </div>
 </template>
 <script>
-import TheArrowSigh from '@/components/TheArrowSigh'
+import ArrowSighs from '@/components/ArrowSighs'
 import TheFooter from '@/components/TheFooter'
 export default {
   components: {
-    TheArrowSigh,
+    ArrowSighs,
     TheFooter
   }
 }
