@@ -1,16 +1,17 @@
 <template>
-  <div>
-    <ArrowSighs />
-    <Nuxt />
+  <v-app>
+    <the-header />
+    <nuxt />
     <the-footer />
-  </div>
+  </v-app>
 </template>
 <script>
-import ArrowSighs from '@/components/ArrowSighs'
+import TheHeader from '@/components/TheHeader'
 import TheFooter from '@/components/TheFooter'
+
 export default {
   components: {
-    ArrowSighs,
+    TheHeader,
     TheFooter
   }
 }
