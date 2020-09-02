@@ -1,9 +1,9 @@
 <template>
   <div>
     <v-app>
-      <TheHeader />
-    </v-app>
+      <the-header />
       <nuxt />
+    </v-app>
   </div>
 </template>
 
