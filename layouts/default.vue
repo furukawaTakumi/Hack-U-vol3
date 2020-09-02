@@ -1,10 +1,8 @@
 <template>
-  <div>
-    <v-app>
-      <the-header />
-      <nuxt />
-    </v-app>
-  </div>
+  <v-app>
+    <the-header />
+    <nuxt />
+  </v-app>
 </template>
 
 <script>
