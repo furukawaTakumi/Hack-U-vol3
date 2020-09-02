@@ -44,10 +44,7 @@ function geocodeAddress(geocoder, resultsMap) {
 }
 */
 
-
 </script>
-
-
 
     <style type="text/css">
       /* Always set the map height explicitly to define the size of the div
