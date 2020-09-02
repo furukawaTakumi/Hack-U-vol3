@@ -1,10 +1,7 @@
 <template>
-  <div></div>
+  <div />
 </template>
 
 <script>
-export default {
-  name: 'sample',
-  layout: 'default'
-}
+export default {}
 </script>

@@ -2,7 +2,7 @@
   <v-app>
     <the-header />
     <nuxt />
-    <the-hooter />
+    <the-footer />
   </v-app>
 </template>
 <script>
