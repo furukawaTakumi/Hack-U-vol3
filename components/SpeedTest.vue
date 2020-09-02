@@ -21,20 +21,9 @@
 
 <script src="./speedtest.js">
 export default {
-  methods: {
-    data () {
-      return {
-        s: ''
-      }
-    },
-    test () {
-      this.s.onupdate = function (data) { // when status is received, put the values in the appropriate fields
-        document.getElementById('download').textContent = data.dlStatus + ' Mbit/s'
-        document.getElementById('upload').textContent = data.ulStatus + ' Mbit/s'
-        document.getElementById('ping').textContent = data.pingStatus + ' ms, ' + data.jitterStatus + ' ms jitter'
-        document.getElementById('ip').textContent = data.clientIp
-      }
-      this.s.start() // start the speedtest with default settings
+  head () {
+    return {
+
     }
   }
 }
