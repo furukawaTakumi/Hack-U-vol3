@@ -34,9 +34,4 @@ export default {
 </script>
 
 <style scoped>
-.google-map {
-  /* 大きさは親要素で指定 */
-  width: 100%;
-  height: 100%;
-}
 </style>

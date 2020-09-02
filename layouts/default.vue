@@ -2,6 +2,7 @@
   <v-app>
     <the-header />
     <nuxt />
+    
     <the-footer />
   </v-app>
 </template>
