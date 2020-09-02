@@ -8,7 +8,7 @@
 
 <script>
 import TheFooter from '@/components/TheFooter'
-import TheSpeedTest from '@/components/SpeedTest'
+import TheSpeedTest from '@/components/TheSpeedTest'
 
 export default {
   components: {
