@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <the-header />
-    <nuxt />
     <MapGeocoding />
+    <nuxt />
     <the-footer />
   </v-app>
 </template>

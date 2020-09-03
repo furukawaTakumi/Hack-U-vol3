@@ -1,27 +1,28 @@
 /* eslint-enable */
 <template>
-  <body>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default" />
-    <script src="@/static/index.js"/>
+  <head>
+    <title>Geocoding Service</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPJpjD-qcR_yIxJnS8maR5W9KB0E3EzYI&callback=initMap&libraries=&v=weekly"
+      src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=&v=weekly"
       defer
     ></script>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script src="./app.js"></script>
+  </head>
     <div id="floating-panel">
       <input id="address" type="textbox" value="Sydney, NSW" />
       <input id="submit" type="button" value="Geocode" />
     </div>
-    <div id="map"></div>
-  </body>
+    <div id="map" />
 </template>
-
 <script>
 export default {
 
 }
 </script>
 
-    <style type="text/css">
+    <style type="text/css" scoped>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
