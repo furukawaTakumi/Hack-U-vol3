@@ -1,6 +1,8 @@
 <template>
-  <div class="frame">
-    <div class="arrow" :class="{'moving-arrow': isMove, 'stop-arrow': !isMove}" />
+  <div>
+    <div class="frame">
+      <div class="arrow" :class="{'moving-arrow': isMove, 'stop-arrow': !isMove}" />
+    </div>
   </div>
 </template>
 
@@ -25,8 +27,8 @@ export default {
 
 <style scoped>
 .frame {
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
 }
 .arrow {
   width: 50px;
@@ -35,7 +37,7 @@ export default {
 .stop-arrow {
   border: solid 0.6em;
   border-color: black transparent transparent black;
-  transform: translate(-1.5em, 25px) rotate(135deg);
+  transform: translate(0%, 50%) rotate(135deg);
 }
 .moving-arrow {
   animation-duration: 0.8s;
@@ -47,12 +49,12 @@ export default {
   from {
     border: solid 0.6em;
     border-color: black transparent transparent black;
-    transform: translate(-1.5em, 25px) rotate(135deg);
+    transform: translate(0em, 50%) rotate(135deg);
   }
   to {
     border: solid 0.6em;
     border-color: transparent transparent transparent transparent;
-    transform: translate(1.5em, 25px) rotate(135deg);
+    transform: translate(1.5em, 50%) rotate(135deg);
   }
 }
 </style>
