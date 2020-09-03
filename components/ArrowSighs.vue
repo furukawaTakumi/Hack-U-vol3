@@ -1,73 +1,58 @@
 <template>
-  <div id="arrowAnim">
-    <div class="arrowSliding">
-      <div class="arrow" />
-    </div>
-    <div class="arrowSliding delay1">
-      <div class="arrow" />
-    </div>
-    <div class="arrowSliding delay2">
-      <div class="arrow" />
-    </div>
-    <div class="arrowSliding delay3">
-      <div class="arrow" />
-    </div>
+  <div class="frame">
+    <div class="arrow" :class="{'moving-arrow': isMove, 'stop-arrow': !isMove}" />
   </div>
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      isMove: false
+    }
+  },
+  methods: {
+    startAnimation () {
+      this.isMove = true
+    },
+    stopAnimation () {
+      this.isMove = false
+    }
+  }
 }
 
 </script>
 
 <style scoped>
-#arrowAnim {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.frame {
+  width: 50px;
+  height: 50px;
 }
-
 .arrow {
-  width: 5vw;
-  height: 5vw;
-  border: 1.5vw solid;
+  width: 50px;
+  height: 50px;
+}
+.stop-arrow {
+  border: solid 0.6em;
   border-color: black transparent transparent black;
-  transform: rotate(135deg);
+  transform: translate(-1.5em, 25px) rotate(135deg);
 }
-
-.arrowSliding {
-  position: absolute;
-  -webkit-animation: slide 1s linear infinite;
-          animation: slide 1s linear infinite;
-          animation-direction:normal;
+.moving-arrow {
+  animation-duration: 0.8s;
+  animation-name: arrow-anim;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
-
-.delay1 {
-  -webkit-animation-delay: 1s;
-    animation-delay: 1s;
-}
-.delay2 {
-  -webkit-animation-delay: 1s;
-    animation-delay: 1s;
-}
-.delay3 {
-  -webkit-animation-delay: 1s;
-    animation-delay: 1s;
-}
-
-@-webkit-keyframes slide {
-    0% { opacity:0; transform: translateX(-17vw); }
-   20% { opacity:1; transform: translateX(-9vw); }
-   80% { opacity:1; transform: translateX(9vw); }
-  100% { opacity:0; transform: translateX(17vw); }
-}
-@keyframes slide {
-    0% { opacity:0; transform: translateX(-17vw); }
-   20% { opacity:1; transform: translateX(-9vw); }
-   80% { opacity:1; transform: translateX(9vw); }
-  100% { opacity:0; transform: translateX(17vw); }
+@keyframes arrow-anim {
+  from {
+    border: solid 0.6em;
+    border-color: black transparent transparent black;
+    transform: translate(-1.5em, 25px) rotate(135deg);
+  }
+  to {
+    border: solid 0.6em;
+    border-color: transparent transparent transparent transparent;
+    transform: translate(1.5em, 25px) rotate(135deg);
+  }
 }
 </style>
