@@ -20,7 +20,7 @@ export default {
 
 <style scoped>
 .mainFilePicker {
-  width: 600px;
-  height: 600px;
+  width: 300px;
+  height: 300px;
 }
 </style>

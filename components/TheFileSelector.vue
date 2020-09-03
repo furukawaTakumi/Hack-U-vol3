@@ -8,12 +8,17 @@
       prepend-icon
       multiple
       outlined
-      :show-size="10"
       :height="inputHeight"
       @change="setFileSize"
     >
       <template v-slot:selection="{ index, text }">
-        <v-chip v-if="index < 8" color="deep-purple accent-4" dark label small>
+        <v-chip
+          v-if="index < 8"
+          color="deep-purple accent-4"
+          dark
+          label
+          small
+        >
           {{ text }}
         </v-chip>
 
@@ -59,7 +64,6 @@ export default {
 
 <style scoped>
 .filePikcer {
-  background-color: aqua;
   width: 100%;
   height: 100%;
 }
