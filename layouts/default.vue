@@ -1,5 +1,6 @@
 <template>
   <v-app class="vApp">
+    <the-file-selector class="mainFilePicker" />
     <nuxt />
     <the-footer />
   </v-app>
@@ -7,13 +8,19 @@
 
 <script>
 import TheFooter from '@/components/TheFooter'
+import TheFileSelector from '@/components/TheFileSelector'
 
 export default {
   components: {
-    TheFooter
+    TheFooter,
+    TheFileSelector
   }
 }
 </script>
 
 <style scoped>
+.mainFilePicker {
+  width: 400px;
+  height: 400px;
+}
 </style>
