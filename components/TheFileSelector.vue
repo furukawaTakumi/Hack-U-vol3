@@ -8,7 +8,7 @@
       prepend-icon
       multiple
       outlined
-      :show-size="1000"
+      :show-size="10"
       :height="inputHeight"
       @change="setFileSize"
     >
@@ -23,9 +23,6 @@
         >+{{ files.length - 8 }} File(s)</span>
       </template>
     </v-file-input>
-    <button @click="setPickerHeight">
-      aaaaa
-    </button>
   </div>
 </template>
 
@@ -34,10 +31,12 @@ export default {
   data: () => ({
     fileSize: 0,
     files: [],
-    inputHeight: 200
+    inputHeight: 0
   }),
   mounted () {
-    this.setPickerHeight()
+    window.addEventListener('load', () => {
+      this.setPickerHeight()
+    })
   },
   methods: {
     setFileSize (e) {
@@ -49,10 +48,10 @@ export default {
       return this.fileSize
     },
     setPickerHeight () {
-      // this.inputHeight = document.getElementById('filePicker').style.height
-      window.onload(() => {
-        alert(document.getElementById('filePicker').style.height)
-      })
+      const element = document.getElementById('filePicker')
+      const cssStyleDeclaration = getComputedStyle(element, null)
+      const height = cssStyleDeclaration.getPropertyValue('height')
+      this.inputHeight = height
     }
   }
 }
