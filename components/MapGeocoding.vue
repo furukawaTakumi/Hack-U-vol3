@@ -1,6 +1,8 @@
+/* eslint-enable */
 <template>
   <body>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default" />
+    <script src="@/static/index.js"/>
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPJpjD-qcR_yIxJnS8maR5W9KB0E3EzYI&callback=initMap&libraries=&v=weekly"
       defer
@@ -11,39 +13,12 @@
     </div>
     <div id="map"></div>
   </body>
-
 </template>
 
 <script>
-/* このjsを使う書き方が分かりません・・・。
 export default {
-    function initMap() {
-  const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 8,
-    center: { lat: -34.397, lng: 150.644 }
-  });
-  const geocoder = new google.maps.Geocoder();
-  document.getElementById("submit").addEventListener("click", () => {
-    geocodeAddress(geocoder, map);
-  });
-}
 
-function geocodeAddress(geocoder, resultsMap) {
-  const address = document.getElementById("address").value;
-  geocoder.geocode({ address: address }, (results, status) => {
-    if (status === "OK") {
-      resultsMap.setCenter(results[0].geometry.location);
-      new google.maps.Marker({
-        map: resultsMap,
-        position: results[0].geometry.location
-      });
-    } else {
-      alert("Geocode was not successful for the following reason: " + status);
-    }
-  });
 }
-*/
-
 </script>
 
     <style type="text/css">
