@@ -2,7 +2,10 @@
   <div class="map-frame">
     <div :id="googleMapId" class="google-map" />
     <v-text-field
+      solo
+      single-line
       v-model="addressText"
+      class="text-field"
       :placeholder="placeholder"
       @change="geoCording()"
     />
@@ -75,9 +78,13 @@ export default {
 </script>
 
 <style scoped>
+.map-frame {
+  width: 540px;
+}
 .google-map {
-  /* 大きさは親要素で指定 */
-  width: 100%;
-  height: 100%;
+  height: 400px;
+}
+.text-field {
+  margin-top: 0.4em;
 }
 </style>
