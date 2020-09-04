@@ -80,7 +80,7 @@ export default {
     /* eslint-disable */
     window.addEventListener("load", () => {
       this.s = new Speedtest();
-
+      this.loadServers();
       this.s.onupdate=function(data){ //callback to update data in UI
       this.uSpeed = (data.testState==3&&data.ulStatus==0)?"...":data.ulStatus;
       this.dSpeed = (data.testState==1&&data.dlStatus==0)?"...":data.dlStatus;
@@ -96,8 +96,8 @@ export default {
         this.initUI();
         }
     }
-    this.loadServers();
     });
+    alert('aaaa');
   },
   methods: {
     selectServer() {
@@ -109,6 +109,7 @@ export default {
       });
     },
     loadServers() {
+      alert(this.s);
       //called when the page is fully loaded
       // this.I("startStopBtn").style.display = "none"; //hide start/stop button during server selection
       if (typeof this.SPEEDTEST_SERVERS === "string") {
@@ -126,14 +127,15 @@ export default {
     },
     startStop() {
       //start/stop button pressed
-      if (this.s.getState() == 3) {
+      // if (this.s.getState() == 3) {
         //speedtest is running, abort
-        this.s.abort();
-      } else {
+        // this.s.abort();
+      // } else {
         //test is not running, begin
-        this.s.start();
-        this.I("startStopBtn").className = "running";
-      }
+        // this.s.start();
+        // alert(this.s);
+        // this.I("startStopBtn").className = "running";
+      // }
     },
     //function to (re)initialize UI
     initUI() {

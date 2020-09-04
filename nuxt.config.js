@@ -83,6 +83,12 @@ export default {
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
   */
+  // proxy: {
+  //   '/api/': {
+  //     target: '',
+  //     pathRewrite: { '^/api/': '' }
+  //   }
+  // },
   build: {
   }
 }
