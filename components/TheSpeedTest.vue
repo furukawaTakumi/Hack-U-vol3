@@ -97,7 +97,6 @@ export default {
         }
     }
     });
-    alert('aaaa');
   },
   methods: {
     selectServer() {
@@ -109,7 +108,6 @@ export default {
       });
     },
     loadServers() {
-      alert(this.s);
       //called when the page is fully loaded
       // this.I("startStopBtn").style.display = "none"; //hide start/stop button during server selection
       if (typeof this.SPEEDTEST_SERVERS === "string") {
@@ -126,16 +124,16 @@ export default {
       }
     },
     startStop() {
-      //start/stop button pressed
-      // if (this.s.getState() == 3) {
-        //speedtest is running, abort
-        // this.s.abort();
-      // } else {
-        //test is not running, begin
-        // this.s.start();
-        // alert(this.s);
-        // this.I("startStopBtn").className = "running";
-      // }
+      // start/stop button pressed
+      if (this.s.getState() == 3) {
+        // speedtest is running, abort
+        this.s.abort();
+      } else {
+        // test is not running, begin
+        this.s.start();
+        alert(this.s);
+        this.I("startStopBtn").className = "running";
+      }
     },
     //function to (re)initialize UI
     initUI() {
