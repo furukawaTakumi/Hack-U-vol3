@@ -150,9 +150,9 @@ export default {
   head: {
     script: [
       { src: "speedtest.js" },
-      { src: "speedtest_worker.js" },
-    ],
-  },
+      { src: "speedtest_worker.js" }
+    ]
+  }
 };
 </script>
 
