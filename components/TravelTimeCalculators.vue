@@ -11,9 +11,26 @@
         <google-maps ref="destination_map" />
       </div>
     </div>
-    <p>distance: {{ this.distanceObj.text }}</p>
-    <p>duration: {{ this.durationObj.text }}</p>
-    <button @click="calcuTravelTime()">距離の計算する</button>
+    <v-dialog v-model="isOpenedModal" class="detail-modal">
+      <v-card>
+        <v-card-title>移動時間の詳細</v-card-title>
+        <v-card-text>
+          <v-simple-table>
+            <tr>
+              <td>移動距離</td>
+              <td>{{ distanceDetailText }}</td>
+            </tr>
+            <tr>
+              <td>移動時間</td>
+              <td>{{ durationDetailText }}</td>
+            </tr>
+          </v-simple-table>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+    <p>移動距離: {{ distanceObj.text }}</p>
+    <p>移動時間: {{ durationObj.text }}</p>
+    <button @click="calcuTravelTime(); isOpenedModal = true">距離の計算する</button>
   </div>
 </template>
 
@@ -29,8 +46,9 @@ export default {
   data () {
     return {
       service: null,
-      distanceObj: {},
-      durationObj: {}
+      distanceObj: { distance: 0, text: '' },
+      durationObj: { duration: 0, text: '' },
+      isOpenedModal: false
     }
   },
   mounted () {
@@ -66,6 +84,12 @@ export default {
     }
   },
   computed: {
+    distanceDetailText () {
+      return `${this.distanceObj.value / 1000} km`
+    },
+    durationDetailText () {
+      return `${Math.floor(this.durationObj.value / 60)} 分`
+    }
   },
   head () {
     return {
@@ -77,7 +101,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 .frame {
   display: flex;
   flex-direction: row;
