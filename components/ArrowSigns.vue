@@ -27,6 +27,7 @@ export default {
 
 <style scoped>
 .frame {
+  margin: auto;
   width: 100px;
   height: 100px;
 }

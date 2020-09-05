@@ -51,6 +51,7 @@ export default {
         if (status === 'OK') {
           const location = response[0].geometry.location.toJSON()
           this.setLocation(location)
+          this.$emit('geoCording')
         } else {
           console.error('一致する住所がありません')
         }

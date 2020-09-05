@@ -1,16 +1,36 @@
 <template>
   <div>
-    <div class="frame">
-      <div class="origin-map">
-        <google-maps ref="originMap" />
-      </div>
-      <div class="arrow-sigh-range">
-        <arrow-signs />
-      </div>
-      <div class="destination-map">
-        <google-maps ref="destination_map" />
-      </div>
-    </div>
+    <v-container>
+      <v-row
+        align="center"
+      >
+        <v-col>
+          <google-maps
+            ref="originMap"
+            @geoCording="calcuTravelTime()"
+            :placeholder="'送りたいデータのある住所'"
+          />
+        </v-col>
+        <v-col class="arrow-col">
+          <arrow-signs ref="arrowSign" />
+        </v-col>
+        <v-col>
+          <google-maps
+            ref="destinationMap"
+            @geoCording="calcuTravelTime()"
+            :placeholder="'データを送る住所'"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-container
+      @click="isOpenedModal = !isOpenedModal"
+      light-blue--text
+      text--lighten-4
+      text-center
+    >
+      △移動時間の詳細を表示する
+    </v-container>
     <v-dialog v-model="isOpenedModal" class="detail-modal">
       <v-card>
         <v-card-title>移動時間の詳細</v-card-title>
@@ -28,9 +48,6 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-    <p>移動距離: {{ distanceObj.text }}</p>
-    <p>移動時間: {{ durationObj.text }}</p>
-    <button @click="calcuTravelTime(); isOpenedModal = true">距離の計算する</button>
   </div>
 </template>
 
@@ -46,49 +63,49 @@ export default {
   data () {
     return {
       service: null,
-      distanceObj: { distance: 0, text: '' },
-      durationObj: { duration: 0, text: '' },
+      distanceObj: { value: 0, text: '' },
+      durationObj: { value: 0, text: '' },
       isOpenedModal: false
     }
   },
   mounted () {
-    const instance = this
     window.addEventListener('load', () => {
-      instance.service = new google.maps.DistanceMatrixService(); // eslint-disable-line
+      this.service = new google.maps.DirectionsService() // eslint-disable-line
     })
   },
   methods: {
     calcuTravelTime () {
-      // const origin = this.$refs.originMap.getSpot()
-      // const destination = this.$refs.destinationMap.getSpot()
-      /* eslint-disable */ // google 変数が未定義だと怒られるため
-      const origin = new google.maps.LatLng(35.183586468431, 137.11180451123)
-      const destination = new google.maps.LatLng(35.1766465, 137.1062392)
-      /* eslint-enable */
-      this.service.getDistanceMatrix({
-        origins: [origin],
-        destinations: [destination],
+      this.$refs.arrowSign.startAnimation()
+      this.service.route({
+        origin: this.$refs.originMap.getLocation(),
+        destination: this.$refs.destinationMap.getLocation(),
         travelMode: 'DRIVING'
-      }, (response, status) => {
-        if (status === 'OK') {
-          const result = response.rows[0].elements[0]
-          if (status !== 'OK') {
-            throw new Error('error: element status is not OK.')
-          }
-          this.distanceObj = result.distance
-          this.durationObj = result.duration
-        } else {
-          throw new Error('error: status is not OK.')
+      }, (response) => {
+        if (response.status === 'OK') {
+          this.durationObj = response.routes[0].legs[0].duration
+          this.distanceObj = response.routes[0].legs[0].distance
+        } else if (response.status === 'ZERO_RESULTS') {
+          console.error('結果が取得できませんでした')
         }
       })
+      this.$refs.arrowSign.stopAnimation()
     }
   },
   computed: {
     distanceDetailText () {
+      if (this.distanceObj.value === 0) {
+        return '交通手段がない、もしくは初期値のままです。'
+      }
       return `${this.distanceObj.value / 1000} km`
     },
     durationDetailText () {
-      return `${Math.floor(this.durationObj.value / 60)} 分`
+      if (this.durationObj.value === 0) {
+        return '交通手段がない、もしくは初期値のままです。'
+      }
+      const hours = Math.floor(this.durationObj.value / 3600)
+      const minits = Math.floor((this.durationObj.value - hours * 3600) / 60)
+      const seconds = Math.floor((this.durationObj.value - hours * 3600 - minits * 60))
+      return `${hours}時間 ${minits}分 ${seconds}秒`
     }
   },
   head () {
@@ -105,15 +122,6 @@ export default {
 .frame {
   display: flex;
   flex-direction: row;
-  width: 100%;
   align-items: center;
-}
-.origin-map {
-  width: 300px;
-  height: 180px;
-}
-.destination-map {
-  width: 300px;
-  height: 180px;
 }
 </style>
