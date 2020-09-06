@@ -12,7 +12,9 @@
     "lint": "npm run lint:js"
   },
   "dependencies": {
+    "child-process-ext": "^2.1.1",
     "nuxt": "^2.13.0",
+    "ping": "^0.2.3",
     "vue-uuid": "^2.0.2"
   },
   "devDependencies": {

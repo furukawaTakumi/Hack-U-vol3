@@ -37,7 +37,8 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
-    '~/plugins/vue-uuid'
+    { src: '~/plugins/vue-uuid' },
+    { src: '~/plugins/ping' }
   ],
   /*
   ** Auto import components
