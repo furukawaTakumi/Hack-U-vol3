@@ -13,7 +13,7 @@
     >
       <template v-slot:selection="{ index, text }">
         <v-chip
-          v-if="index < 8"
+          v-if="index < showFileChipCount"
           color="deep-purple accent-4"
           dark
           label
@@ -23,9 +23,9 @@
         </v-chip>
 
         <span
-          v-else-if="index === 8"
+          v-else-if="index === showFileChipCount"
           class="overline grey--text text--darken-3 mx-2"
-        >+{{ files.length - 8 }} File(s)</span>
+        >+{{ files.length - showFileChipCount }} File(s)</span>
       </template>
     </v-file-input>
   </div>
@@ -33,6 +33,12 @@
 
 <script>
 export default {
+  props: {
+    showFileChipCount: {
+      type: Number,
+      required: true
+    }
+  },
   data: () => ({
     fileSize: 0,
     files: [],
