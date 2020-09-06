@@ -12,7 +12,7 @@ import TheFooter from '@/components/TheFooter'
 export default {
   components: {
     TheHeader,
-    TheFooter
-  }
+    TheFooter,
+  },
 }
 </script>

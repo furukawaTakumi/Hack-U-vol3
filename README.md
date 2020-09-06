@@ -28,3 +28,20 @@ Google Mapを利用するためにはAPI KEYを環境変数に設定する必要
 touch .env 
 echo "NUXT_ENV_GMAP_API_KEY=API_KEY" >> .env
 ```
+
+## prettierを実行する手順
+以下を実行し、プロジェクトでprettierへのパスを通して実行可能にします。
+
+```
+export PATH=$PATH:./node_modules/.bin
+```
+
+### 使い方
+```
+prettier '適用ディレクトリまたはファイル名' --write
+```
+
+`--write`は上書きの設定
+
+### 注意点
+eslintとprettierでフォーマットの形式が違う場合があり、必ずしもエラーが出ない状態になるとは限りません。設定が必要な場合はpackage.jsonの"prettier"に設定を追加してください。

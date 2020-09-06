@@ -25,7 +25,8 @@
         <span
           v-else-if="index === showFileChipCount"
           class="overline grey--text text--darken-3 mx-2"
-        >+{{ files.length - showFileChipCount }} File(s)</span>
+          >+{{ files.length - showFileChipCount }} File(s)</span
+        >
       </template>
     </v-file-input>
   </div>
@@ -36,34 +37,35 @@ export default {
   props: {
     showFileChipCount: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data: () => ({
     fileSize: 0,
     files: [],
-    inputHeight: 0
+    inputHeight: 0,
   }),
-  mounted () {
+  mounted() {
     this.setPickerHeight()
   },
   methods: {
-    setFileSize (e) {
+    setFileSize(e) {
       for (let i = 0; i < e.length; i++) {
         this.fileSize += e[i].size
       }
       this.$emit('fileSelected')
     },
-    getFileSize () {
+    getFileSize() {
       return this.fileSize
     },
-    setPickerHeight () {
+    setPickerHeight() {
       const filePicker = document.getElementById('filePicker')
       const filePickerStyle = getComputedStyle(filePicker)
-      const height = filePickerStyle.height.match(/(?<hValue>[0-9]+).*/).groups.hValue
+      const height = filePickerStyle.height.match(/(?<hValue>[0-9]+).*/).groups
+        .hValue
       this.inputHeight = height - 30
-    }
-  }
+    },
+  },
 }
 </script>
 

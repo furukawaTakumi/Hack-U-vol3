@@ -1,9 +1,7 @@
 <template>
   <div>
     <v-container>
-      <v-row
-        align="center"
-      >
+      <v-row align="center">
         <v-col>
           <google-maps
             ref="originMap"
@@ -58,67 +56,74 @@ import ArrowSigns from '@/components/ArrowSigns'
 export default {
   components: {
     GoogleMaps,
-    ArrowSigns
+    ArrowSigns,
   },
-  data () {
+  data() {
     return {
       service: null,
       distanceObj: { value: 0, text: '' },
       durationObj: { value: 0, text: '' },
-      isOpenedModal: false
+      isOpenedModal: false,
     }
   },
-  mounted () {
+  mounted() {
     window.addEventListener('load', () => {
       this.service = new google.maps.DirectionsService() // eslint-disable-line
     })
   },
   methods: {
-    calcuTravelTime () {
+    calcuTravelTime() {
       this.$refs.arrowSign.startAnimation()
-      this.service.route({
-        origin: this.$refs.originMap.getLocation(),
-        destination: this.$refs.destinationMap.getLocation(),
-        travelMode: 'DRIVING'
-      }, (response) => {
-        if (response.status === 'OK') {
-          this.durationObj = response.routes[0].legs[0].duration
-          this.distanceObj = response.routes[0].legs[0].distance
-        } else if (response.status === 'ZERO_RESULTS') {
-          console.error('結果が取得できませんでした')
+      this.service.route(
+        {
+          origin: this.$refs.originMap.getLocation(),
+          destination: this.$refs.destinationMap.getLocation(),
+          travelMode: 'DRIVING',
+        },
+        (response) => {
+          if (response.status === 'OK') {
+            this.durationObj = response.routes[0].legs[0].duration
+            this.distanceObj = response.routes[0].legs[0].distance
+          } else if (response.status === 'ZERO_RESULTS') {
+            console.error('結果が取得できませんでした')
+          }
         }
-      })
+      )
       this.$refs.arrowSign.stopAnimation()
-    }
+    },
   },
   computed: {
-    distanceDetailText () {
+    distanceDetailText() {
       if (this.distanceObj.value === 0) {
         return '交通手段がない、もしくは初期値のままです。'
       }
       return `${this.distanceObj.value / 1000} km`
     },
-    durationDetailText () {
+    durationDetailText() {
       if (this.durationObj.value === 0) {
         return '交通手段がない、もしくは初期値のままです。'
       }
       const hours = Math.floor(this.durationObj.value / 3600)
       const minits = Math.floor((this.durationObj.value - hours * 3600) / 60)
-      const seconds = Math.floor((this.durationObj.value - hours * 3600 - minits * 60))
+      const seconds = Math.floor(
+        this.durationObj.value - hours * 3600 - minits * 60
+      )
       return `${hours}時間 ${minits}分 ${seconds}秒`
-    }
+    },
   },
-  head () {
+  head() {
     return {
       script: [
-        { src: `https://maps.googleapis.com/maps/api/js?key=${process.env.NUXT_ENV_GMAP_API_KEY}` }
-      ]
+        {
+          src: `https://maps.googleapis.com/maps/api/js?key=${process.env.NUXT_ENV_GMAP_API_KEY}`,
+        },
+      ],
     }
-  }
+  },
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .frame {
   display: flex;
   flex-direction: row;
