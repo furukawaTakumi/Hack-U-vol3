@@ -38,7 +38,8 @@ export default {
   */
   plugins: [
     { src: '~/plugins/vue-uuid' },
-    { src: '~/plugins/ping' }
+    { src: '~/plugins/ping' },
+    { src: '~/plugins/child-process-ext' }
   ],
   /*
   ** Auto import components

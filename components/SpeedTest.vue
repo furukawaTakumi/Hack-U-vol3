@@ -15,8 +15,8 @@ export default {
   methods: {
     test () {
       const ping = require('ping')
-
-      const hosts = ['192.168.1.1']
+      console.log(ping)
+      const hosts = ['192.168.1.22']
       hosts.forEach(function (host) {
         ping.sys.probe(host, function (isAlive) {
           const msg = isAlive ? 'host ' + host + ' is alive' : 'host ' + host + ' is dead'
