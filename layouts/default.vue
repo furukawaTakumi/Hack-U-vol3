@@ -1,26 +1,15 @@
 <template>
-  <v-app class="vApp">
-    <the-file-selector class="mainFilePicker" />
+  <div>
     <nuxt />
     <the-footer />
-  </v-app>
+  </div>
 </template>
 
 <script>
 import TheFooter from '@/components/TheFooter'
-import TheFileSelector from '@/components/TheFileSelector'
-
 export default {
   components: {
-    TheFooter,
-    TheFileSelector
+    TheFooter
   }
 }
 </script>
-
-<style scoped>
-.mainFilePicker {
-  width: 300px;
-  height: 300px;
-}
-</style>
