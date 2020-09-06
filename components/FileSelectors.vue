@@ -58,10 +58,10 @@ export default {
       return this.fileSize
     },
     setPickerHeight () {
-      const element = document.getElementById('filePicker')
-      const cssStyleDeclaration = getComputedStyle(element, null)
-      const height = cssStyleDeclaration.getPropertyValue('height')
-      this.inputHeight = height
+      const filePicker = document.getElementById('filePicker')
+      const filePickerStyle = getComputedStyle(filePicker)
+      const height = filePickerStyle.height.match(/(?<hValue>[0-9]+).*/).groups.hValue
+      this.inputHeight = height - 30
     }
   }
 }
