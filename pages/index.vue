@@ -1,7 +1,11 @@
 <template>
-  <div />
+  <google-maps :placeholder="'送信元住所'" />
 </template>
 
 <script>
-export default {}
+
+import GoogleMaps from '@/components/GoogleMaps'
+export default {
+  GoogleMaps
+}
 </script>
