@@ -14,7 +14,7 @@
     "precommit": "npm run lint"
   },
   "prettier": {
-    "singleQuote": false,
+    "singleQuote": true,
     "semi": false
   },
   "dependencies": {

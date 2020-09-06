@@ -30,7 +30,8 @@ echo "NUXT_ENV_GMAP_API_KEY=API_KEY" >> .env
 ```
 
 ## prettierを実行する手順
-以下を実行し、プロジェクトでprettierへのパスを通して実行可能にします。
+### 準備
+`npm install`を実行後、以下を実行し、プロジェクトでprettierへのパスを通して実行可能にします。
 
 ```
 export PATH=$PATH:./node_modules/.bin
