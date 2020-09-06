@@ -1,18 +1,18 @@
 <template>
-  <div>
-    <v-app>
-      <the-header />
-      <nuxt />
-    </v-app>
-  </div>
+  <v-app>
+    <the-header />
+    <nuxt />
+    <the-footer />
+  </v-app>
 </template>
-
 <script>
 import TheHeader from '@/components/TheHeader'
+import TheFooter from '@/components/TheFooter'
 
 export default {
   components: {
-    TheHeader
+    TheHeader,
+    TheFooter
   }
 }
 </script>
