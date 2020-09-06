@@ -39,9 +39,7 @@ export default {
     inputHeight: 0
   }),
   mounted () {
-    window.addEventListener('load', () => {
-      this.setPickerHeight()
-    })
+    this.setPickerHeight()
   },
   methods: {
     setFileSize (e) {
