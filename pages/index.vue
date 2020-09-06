@@ -1,13 +1,7 @@
 <template>
-  <file-size-inputs />
+  <div />
 </template>
 
 <script>
-import FileSizeInputs from '@/components/FileSizeInputs'
-
-export default {
-  components: {
-    FileSizeInputs,
-  },
-}
+export default {}
 </script>
