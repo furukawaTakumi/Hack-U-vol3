@@ -21,6 +21,7 @@ export default {}
 
 <style scoped>
 h1 {
+  white-space: nowrap;
   color: black;
   margin: 25px;
 }
