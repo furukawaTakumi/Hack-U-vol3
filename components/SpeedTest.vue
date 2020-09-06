@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div id="ping-github"></div>
     <button @click="test">
       aaaa
     </button>
@@ -7,6 +8,8 @@
 </template>
 
 <script>
+import Ping from 'ping.js'
+
 export default {
   data () {
     return {
@@ -14,14 +17,15 @@ export default {
   },
   methods: {
     test () {
-      const ping = require('ping')
+      const p = new Ping()
 
-      const hosts = ['192.168.1.1']
-      hosts.forEach(function (host) {
-        ping.sys.probe(host, function (isAlive) {
-          const msg = isAlive ? 'host ' + host + ' is alive' : 'host ' + host + ' is dead'
-          console.log(msg)
-        })
+      p.ping('https://google.com', function (err, data) {
+        // Also display error if err is returned.
+        if (err) {
+          console.log('error loading resource')
+          data = data + ' ' + err
+        }
+        document.getElementById('ping-github').innerHTML = data
       })
     }
     // ping () {
