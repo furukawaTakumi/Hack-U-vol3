@@ -46,6 +46,7 @@ export default {
       for (let i = 0; i < e.length; i++) {
         this.fileSize += e[i].size
       }
+      this.$emit('fileSelected')
     },
     getFileSize () {
       return this.fileSize
