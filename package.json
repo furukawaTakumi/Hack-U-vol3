@@ -11,7 +11,8 @@
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint": "npm run lint:js",
     "lintfix": "eslint --fix",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint",
+    "generate": "nuxt generate"
   },
   "prettier": {
     "singleQuote": true,
