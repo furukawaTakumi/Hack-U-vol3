@@ -57,11 +57,11 @@ export default {
           // this.speed = (buffer.length / ((resDate - sendDate) / (1000 * 2))) * 8 / 1000000
           const _byte = buffer.length
           const _bit = _byte * 8
-          const _mbp = _bit / 1000000
+          const _mb = _bit / 1000000
           const _msTime = (resDate - sendDate) / 1000
           const _toServerTime = _msTime / 2
           // mbps単位
-          const currentSpeed = _mbp / _toServerTime
+          const currentSpeed = _mb / _toServerTime
           this.speed = (this.speed + currentSpeed) / 2
           // 切り捨て
           this.valueSpeed = this.speed.toFixed(2)
