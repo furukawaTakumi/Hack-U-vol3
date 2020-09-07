@@ -38,7 +38,7 @@ export default {
       this.googleLib = google
       this.googleMap = new this.googleLib.maps.Map(mapElem, {
         center: this.location,　zoom: 4
-      } )
+      })
       this.geocoder = new this.googleLib.maps.Geocoder()
       this.marker = new this.googleLib.maps.Marker({ position: this.location })
       this.setLocation(this.location)
@@ -56,14 +56,25 @@ export default {
         }
       })
     },
+    reverseGeoCording (location) {
+      console.log('location', location)
+      this.geocoder.geocode(location, function (results, status) {
+        console.log(results)
+        console.log(status)
+        if (status === 'OK') {
+        }
+      })
+    },
     getLocation () {
       return this.location
     },
     setLocation (location) {
       this.location = location
+      this.reverseGeoCording(location)
       this.googleMap.setCenter(location)
       this.marker.setMap(null)
       this.marker = new this.googleLib.maps.Marker({ position: location })
+      this.marker.setDraggable(true)
       this.marker.setMap(this.googleMap)
     }
   },
