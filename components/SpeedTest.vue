@@ -1,15 +1,10 @@
 <template>
   <div>
-    <!-- <ul>
-      <li v-for="(post, index) in posts" :key="index">
-        <a :href="'post.url'" target="_blank" rel="noopener noreferrer">{{ post.title }}</a>
-      </li>
-    </ul> -->
     <canvas id="target" />
     <button id="startButton" @click="test">
       計測開始
     </button>
-    <a> {{ speed }} Mbps</a>
+    <a> {{ valueSpeed }} Mbps</a>
   </div>
 </template>
 
@@ -19,58 +14,71 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      speed: 0
-    }
-  },
-  mounted () {
-    const canvas = document.getElementById('target')
-    const imagePath = 'dummy.png'
-    draw(canvas, imagePath)
-    function draw (canvas, imagePath) {
-      console.log('draw')
-      const image = new Image()
-      image.addEventListener('load', function () {
-        canvas.width = image.naturalWidth
-        canvas.height = image.naturalHeight
-        const ctx = canvas.getContext('2d')
-        ctx.drawImage(image, 0, 0)
-        console.log('load!')
-      })
-      image.src = imagePath
+      speed: 0,
+      valueSpeed: 0,
+      inTest: false,
+      testCnt: 0,
+      maxTest: 4,
+      testServer: 'http://speedtest02.azurewebsites.net'
     }
   },
   methods: {
     async test () {
-      this.inTestUI()
+      if (this.testCnt === 0) {
+        this.inTestUI()
+        this.inTest = true
+      }
 
-      // Canvasのデータをblob化
-      const canvas = document.getElementById('target')
       const type = 'image/png'
-      const dataurl = canvas.toDataURL(type)
-      const bin = atob(dataurl.split(',')[1])
+      let bin = ''
+      // 適当な文字列を生成
+      for (let i = 0; i < 1000000; i++) {
+        bin = bin + 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+      }
+
       const buffer = new Uint8Array(bin.length)
       for (let i = 0; i < bin.length; i++) {
         buffer[i] = bin.charCodeAt(i)
       }
       const blob = new Blob([buffer.buffer], { type })
-
       const data = new FormData()
       data.append('photo', blob, 'image.png')
-
+      console.log('post start(' + buffer.length / 1000000 + 'MB)')
+      // postの時間
       const sendDate = new Date().getTime()
-      await axios.post('http://speedtest01.azurewebsites.net', data, {
+      // 画像としてURLに載せてpost
+      await axios.post(this.testServer, data, {
         headers: { 'content-type': 'multipart/form-data' }
       })
         .then((res) => {
           // レスポンスがあった段階で計測
           const resDate = new Date().getTime()
           // Mbps単位で計算
-          this.speed = (1800000 / ((resDate - sendDate) / (1000 * 2))) * 8 / 1000000
+          // this.speed = (buffer.length / ((resDate - sendDate) / (1000 * 2))) * 8 / 1000000
+          const _byte = buffer.length
+          const _bit = _byte * 8
+          const _mbp = _bit / 1000000
+          const _msTime = (resDate - sendDate) / 1000
+          const _toServerTime = _msTime / 2
+          // mbps単位
+          const currentSpeed = _mbp / _toServerTime
+          this.speed = (this.speed + currentSpeed) / 2
           // 切り捨て
-          this.speed = this.speed.toFixed(2)
-          console.log('success')
-          this.initUI()
+          this.valueSpeed = this.speed.toFixed(2)
+          console.log('post success')
+
+          if (this.maxTest - 1 >= this.testCnt) {
+            this.testCnt++
+            this.test()
+          } else {
+            this.initUI()
+            this.testCnt = 0
+            this.inTest = false
+          }
         }).catch((error) => {
+          this.initUI()
+          this.inTest = false
+          this.testCnt = 0
           console.log('response error', error)
         })
     },
