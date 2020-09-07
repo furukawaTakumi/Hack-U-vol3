@@ -57,8 +57,8 @@ export default {
       })
     },
     reverseGeoCording (location) {
-      console.log('location', location)
-      this.geocoder.geocode(location, function (results, status) {
+      console.log(location)
+      this.geocoder.geocode({ location }, (results, status) => {
         console.log(results)
         console.log(status)
         if (status === 'OK') {
