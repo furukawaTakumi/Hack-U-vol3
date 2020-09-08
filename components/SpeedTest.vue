@@ -15,11 +15,13 @@ export default {
   data () {
     return {
       speed: 0,
+      speeds: [],
       valueSpeed: 0,
       inTest: false,
       testCnt: 0,
       maxTest: 4,
-      testServer: 'http://speedtest02.azurewebsites.net'
+      testServer: 'http://speedtest02.azurewebsites.net',
+      subTestServer: 'http://speedtest01.azurewebsites.net'
     }
   },
   methods: {
@@ -62,10 +64,20 @@ export default {
           const _toServerTime = _msTime / 2
           // mbps単位
           const currentSpeed = _mb / _toServerTime
-          this.speed = (this.speed + currentSpeed) / 2
+
+          this.speeds.push(currentSpeed)
+
+          let total = 0
+
+          for (let i = 0; i < this.speeds.length; i++) {
+            total += this.speeds[i]
+          }
+
+          this.speed = total / this.speeds.length
+
           // 切り捨て
           this.valueSpeed = this.speed.toFixed(2)
-          console.log('post success')
+          console.log('post success(' + currentSpeed + '>' + this.speed + ')')
 
           if (this.maxTest - 1 >= this.testCnt) {
             this.testCnt++
@@ -76,10 +88,16 @@ export default {
             this.inTest = false
           }
         }).catch((error) => {
-          this.initUI()
-          this.inTest = false
-          this.testCnt = 0
-          console.log('response error', error)
+          if (this.testServer !== this.subTestServer) {
+            console.log('change server >' + this.subTestServer)
+            this.testServer = this.subTestServer
+            this.test()
+          } else {
+            this.initUI()
+            this.inTest = false
+            this.testCnt = 0
+            console.log('response error', error)
+          }
         })
     },
     inTestUI () {
