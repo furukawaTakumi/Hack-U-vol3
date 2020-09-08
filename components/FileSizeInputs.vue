@@ -31,10 +31,14 @@ export default {
     }
   },
   methods: {
+    getFileSize () {
+      if (typeof this.fileSizeNum === 'string') return 0
+      return this.fileSizeNum
+    }
   },
   computed: {
     fileSizeText () {
-      if ( '' === this.fileSizeNum || typeof this.fileSizeNum === 'string'){
+      if (typeof this.fileSizeNum === 'string'){
         return '0 byte'
       } else if (Number.MAX_SAFE_INTEGER < this.fileSizeNum){
         return '扱える数値範囲を超えました。'
