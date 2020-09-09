@@ -85,10 +85,10 @@ export default {
 
 <style scoped>
 .map-frame {
-  width: 540px;
+  width: 220px;
 }
 .google-map {
-  height: 400px;
+  height: 200px;
 }
 .text-field {
   margin-top: 0.4em;
