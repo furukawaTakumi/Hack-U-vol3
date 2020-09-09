@@ -1,9 +1,7 @@
 <template>
   <div>
     <canvas id="target" />
-    <button id="startButton" @click="test">
-      計測開始
-    </button>
+    <button id="startButton" @click="test">計測開始</button>
     <a> {{ valueSpeed }} Mbps</a>
   </div>
 </template>
@@ -12,7 +10,7 @@
 import axios from 'axios'
 
 export default {
-  data () {
+  data() {
     return {
       speed: 0,
       speeds: [],
@@ -21,11 +19,11 @@ export default {
       testCnt: 0,
       maxTest: 4,
       testServer: 'http://speedtest02.azurewebsites.net',
-      subTestServer: 'http://speedtest01.azurewebsites.net'
+      subTestServer: 'http://speedtest01.azurewebsites.net',
     }
   },
   methods: {
-    async test () {
+    async test() {
       if (this.testCnt === 0) {
         this.inTestUI()
         this.inTest = true
@@ -49,9 +47,10 @@ export default {
       // postの時間
       const sendDate = new Date().getTime()
       // 画像としてURLに載せてpost
-      await axios.post(this.testServer, data, {
-        headers: { 'content-type': 'multipart/form-data' }
-      })
+      await axios
+        .post(this.testServer, data, {
+          headers: { 'content-type': 'multipart/form-data' },
+        })
         .then((res) => {
           // レスポンスがあった段階で計測
           const resDate = new Date().getTime()
@@ -88,7 +87,8 @@ export default {
             this.inTest = false
             this.$emit('finish-speed-test', this.speed)
           }
-        }).catch((error) => {
+        })
+        .catch((error) => {
           if (this.testServer !== this.subTestServer) {
             console.log('change server >' + this.subTestServer)
             this.testServer = this.subTestServer
@@ -101,17 +101,17 @@ export default {
           }
         })
     },
-    inTestUI () {
+    inTestUI() {
       const button = document.getElementById('startButton')
       button.id = 'inTestButton'
       button.textContent = '計測中'
     },
-    initUI () {
+    initUI() {
       const button = document.getElementById('inTestButton')
       button.id = 'startButton'
       button.textContent = '計測開始'
-    }
-  }
+    },
+  },
 }
 </script>
 
