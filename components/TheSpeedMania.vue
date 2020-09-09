@@ -13,6 +13,9 @@
       </v-row>
       <v-row v-show="nowState === stateItem[1]" class="section">
         <div class="travel-time-calc-section">
+          <h5 class="travel-time-calc-label">
+            現在地点・データ送信先入力してください。
+          </h5>
           <travel-time-calculators />
         </div>
       </v-row>
@@ -99,6 +102,11 @@ export default {
 .file-selector {
   width: 300px;
   height: 300px;
+}
+.travel-time-calc-label {
+  font-size: 1.4em;
+  text-align: center;
+  margin: 20px;
 }
 #navigation-btn {
   position: fixed;
