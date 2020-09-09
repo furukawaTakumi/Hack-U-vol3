@@ -51,7 +51,7 @@ export default {
         .post(this.testServer, data, {
           headers: { 'content-type': 'multipart/form-data' },
         })
-        .then((res) => {
+        .then(() => {
           // レスポンスがあった段階で計測
           const resDate = new Date().getTime()
           // Mbps単位で計算
