@@ -26,21 +26,21 @@ export default {
         MB: Math.pow(10, 6),
         GB: Math.pow(10, 9),
         TB: Math.pow(10, 12),
-        PB: Math.pow(10, 15) 
+        PB: Math.pow(10, 15),
       },
     }
   },
   methods: {
-    getFileSize () {
+    getFileSize() {
       if (typeof this.fileSizeNum === 'string') return 0
       return this.fileSizeNum
-    }
+    },
   },
   computed: {
-    fileSizeText () {
-      if (typeof this.fileSizeNum === 'string'){
+    fileSizeText() {
+      if (typeof this.fileSizeNum === 'string') {
         return '0 byte'
-      } else if (Number.MAX_SAFE_INTEGER < this.fileSizeNum){
+      } else if (Number.MAX_SAFE_INTEGER < this.fileSizeNum) {
         return '扱える数値範囲を超えました。'
       } else if (this.units.PB <= this.fileSizeNum) {
         return `${(this.fileSizeNum / this.units.PB).toFixed(2)} PB`
@@ -52,10 +52,10 @@ export default {
         return `${(this.fileSizeNum / this.units.MB).toFixed(2)} MB`
       } else if (this.units.KB <= this.fileSizeNum) {
         return `${(this.fileSizeNum / this.units.KB).toFixed(2)} KB`
-      } 
+      }
       return `${this.fileSizeNum} byte`
-    }
-  }
+    },
+  },
 }
 </script>
 
