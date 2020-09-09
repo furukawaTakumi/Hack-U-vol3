@@ -19,6 +19,7 @@
     "semi": false
   },
   "dependencies": {
+    "@nuxtjs/axios": "^5.12.2",
     "nuxt": "^2.13.0",
     "vue-uuid": "^2.0.2"
   },
