@@ -1,32 +1,35 @@
 <template>
   <div>
     <div class="frame">
-      <div class="arrow" :class="{'moving-arrow': isMove, 'stop-arrow': !isMove}" />
+      <div
+        class="arrow"
+        :class="{ 'moving-arrow': isMove, 'stop-arrow': !isMove }"
+      />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-      isMove: false
+      isMove: false,
     }
   },
   methods: {
-    startAnimation () {
+    startAnimation() {
       this.isMove = true
     },
-    stopAnimation () {
+    stopAnimation() {
       this.isMove = false
-    }
-  }
+    },
+  },
 }
-
 </script>
 
 <style scoped>
 .frame {
+  margin: auto;
   width: 100px;
   height: 100px;
 }
