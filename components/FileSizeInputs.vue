@@ -34,6 +34,7 @@ export default {
   methods: {
     getFileSize() {
       if (typeof this.fileSizeNum === 'string') return 0
+      if (!Number.isSafeInteger(this.fileSizeNum)) return 0
       return this.fileSizeNum
     },
   },
