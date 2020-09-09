@@ -3,7 +3,11 @@
     <v-container>
       <v-row v-show="nowState === stateItem[0]" class="section">
         <div class="file-size-input-section">
-          <file-size-inputs v-if="inputFileFaild" />
+          <file-size-inputs
+            v-if="inputFileFaild"
+            ref="fileSizeInput"
+            @input="checkFileSizeInput"
+          />
           <file-selectors v-else :showFileChipCount="5" class="file-selector" />
         </div>
       </v-row>
@@ -19,10 +23,8 @@
       </v-row>
       <v-row v-show="nowState === stateItem[3]"></v-row>
     </v-container>
-    <div id="navigation-btn" @click="proceedInput">
-      <v-btn fab dark color="teal">
-        <v-icon>></v-icon>
-      </v-btn>
+    <div id="navigation-btn">
+      <state-full-buttons @click="proceedInput" ref="stateFullBtn" />
     </div>
   </div>
 </template>
@@ -32,6 +34,7 @@ import TravelTimeCalculators from '@/components/TravelTimeCalculators'
 import FileSizeInputs from '@/components/FileSizeInputs'
 import FileSelectors from '@/components/FileSelectors'
 import SpeedTest from '@/components/SpeedTest'
+import StateFullButtons from '@/components/StateFullButtons'
 
 export default {
   components: {
@@ -39,6 +42,10 @@ export default {
     FileSizeInputs,
     FileSelectors,
     SpeedTest,
+    StateFullButtons,
+  },
+  mounted() {
+    this.$refs.stateFullBtn.changeRejectState()
   },
   data() {
     return {
@@ -50,10 +57,26 @@ export default {
         'confirmed travel time ',
         'finished speed test ',
       ],
+      inputsData: {
+        fileSize: null,
+      },
     }
   },
   methods: {
-    proceedInput() {
+    checkFileSizeInput(fileSize) {
+      if (fileSize === 0) {
+        this.$refs.stateFullBtn.changeRejectState()
+        this.fileSize = null
+      } else {
+        this.$refs.stateFullBtn.changeAcceptState()
+        this.fileSize = fileSize
+      }
+    },
+    proceedInput(btnState) {
+      if (!btnState) {
+        alert('入力に問題があります！')
+        return
+      }
       if (this.stateItem[0] === this.nowState) {
         this.nowState = this.stateItem[1]
       } else if (this.stateItem[1] === this.nowState) {
@@ -61,6 +84,7 @@ export default {
       } else if (this.stateItem[2] === this.nowState) {
         this.nowState = this.stateItem[3]
       }
+      this.$refs.stateFullBtn.changeRejectState()
     },
   },
 }
