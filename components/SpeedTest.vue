@@ -86,6 +86,7 @@ export default {
             this.initUI()
             this.testCnt = 0
             this.inTest = false
+            this.$emit('finish-speed-test', this.speed)
           }
         }).catch((error) => {
           if (this.testServer !== this.subTestServer) {
