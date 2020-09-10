@@ -33,7 +33,6 @@ export default {
       },
     }
   },
-<<<<<<< HEAD
   methods: {
     getFileSize() {
       if (typeof this.fileSizeNum === 'string') return 0
@@ -41,8 +40,6 @@ export default {
       return this.fileSizeNum
     },
   },
-=======
->>>>>>> master
   computed: {
     fileSizeText() {
       if (typeof this.fileSizeNum === 'string') {
