@@ -6,14 +6,10 @@
     tile
   >
     <nuxt-link to="">
-      <v-img
-        src="https://picsum.photos/510/300?random"
-        width="100"
-        height="100"
-      />
+      <v-img src="Logo.png" width="100" height="120" />
     </nuxt-link>
-    <h1>タイトル(予定地)</h1>
-    <v-btn :height="100" :width="100" tile> Menu </v-btn>
+    <a>Speed Mania</a>
+    <v-btn :height="0" :width="0" tile />
   </v-card>
 </template>
 
@@ -22,10 +18,9 @@ export default {}
 </script>
 
 <style scoped>
-h1 {
+a {
   white-space: nowrap;
-  color: black;
-  margin: 25px;
+  font-family: 'Impact';
+  font-size: 60px;
 }
 </style>
->
