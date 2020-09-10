@@ -1,30 +1,31 @@
 <template>
   <div>
     <v-container>
-      <v-row v-show="nowState === stateItem[0]" class="section">
+      <v-row v-show="stateItem[0].value <= nowState.value" class="section">
         <div class="file-size-input-section">
           <file-size-inputs
             v-if="inputFileFaild"
             ref="fileSizeInput"
-            @input="checkFileSizeInput"
+            @input="updateFileSize"
           />
           <file-selectors v-else :showFileChipCount="5" class="file-selector" />
         </div>
       </v-row>
-      <v-row v-show="nowState === stateItem[1]" class="section">
+      <v-row v-show="stateItem[1].value <= nowState.value" class="section">
         <div class="travel-time-calc-section">
           <h5 class="travel-time-calc-label">
             現在地点・データ送信先入力してください。
           </h5>
-          <travel-time-calculators />
+          <travel-time-calculators @calcu-travel-time="updateTravelTime" />
         </div>
       </v-row>
-      <v-row v-show="nowState === stateItem[2]" class="section">
+      <v-row v-show="stateItem[2].value <= nowState.value" class="section">
         <div class="speed-test-section">
-          <speed-test />
+          <h5 class="speed-test-label">回線速度を計測してください。</h5>
+          <speed-test @finish-speed-test="updateLineSpeed" />
         </div>
       </v-row>
-      <v-row v-show="nowState === stateItem[3]"></v-row>
+      <v-row v-show="stateItem[3].value <= nowState.value"></v-row>
     </v-container>
     <div id="navigation-btn">
       <state-full-buttons @click="proceedInput" ref="stateFullBtn" />
@@ -52,21 +53,23 @@ export default {
   },
   data() {
     return {
-      nowState: 'no-input',
+      nowState: { text: 'no-input', value: 1 },
       inputFileFaild: true,
       stateItem: [
-        'no-input',
-        'confirmed file size',
-        'confirmed travel time ',
-        'finished speed test ',
+        { text: 'no-input', value: 1 },
+        { text: 'confirmed file size', value: 2 },
+        { text: 'confirmed travel time ', value: 3 },
+        { text: 'finished speed test ', value: 4 },
       ],
       inputsData: {
         fileSize: null,
+        travelTime: null,
+        speedValue: null,
       },
     }
   },
   methods: {
-    checkFileSizeInput(fileSize) {
+    updateFileSize(fileSize) {
       if (fileSize === 0) {
         this.$refs.stateFullBtn.changeRejectState()
         this.fileSize = null
@@ -75,16 +78,29 @@ export default {
         this.fileSize = fileSize
       }
     },
+    updateTravelTime(travelTimeObj) {
+      if (travelTimeObj.status === 'OK') {
+        this.$refs.stateFullBtn.changeAcceptState()
+        this.inputsData.travelTime = travelTimeObj.duration.value
+      } else {
+        this.$refs.stateFullBtn.changeRejectState()
+        this.inputsData.travelTime = null
+      }
+    },
+    updateLineSpeed(speedValue) {
+      this.inputsData.travelTime = speedValue
+      this.$refs.stateFullBtn.changeAcceptState()
+    },
     proceedInput(btnState) {
       if (!btnState) {
         alert('入力に問題があります！')
         return
       }
-      if (this.stateItem[0] === this.nowState) {
+      if (this.stateItem[0].value === this.nowState.value) {
         this.nowState = this.stateItem[1]
-      } else if (this.stateItem[1] === this.nowState) {
+      } else if (this.stateItem[1].value === this.nowState.value) {
         this.nowState = this.stateItem[2]
-      } else if (this.stateItem[2] === this.nowState) {
+      } else if (this.stateItem[2].value === this.nowState.value) {
         this.nowState = this.stateItem[3]
       }
       this.$refs.stateFullBtn.changeRejectState()
@@ -107,6 +123,11 @@ export default {
   font-size: 1.4em;
   text-align: center;
   margin: 20px;
+}
+.speed-test-label {
+  font-size: 1.4em;
+  text-align: center;
+  margin: 20px 20px 40px;
 }
 #navigation-btn {
   position: fixed;
