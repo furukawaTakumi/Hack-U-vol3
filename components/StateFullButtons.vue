@@ -1,11 +1,11 @@
 <template>
   <v-btn
-    @click="$emit('click', isAccept)"
     :color="colorString"
     rounded
     dark
     class="state-full-btn"
     :class="{ 'is-accept-color': isAccept, 'is-not-accept-color': !isAccept }"
+    @click="$emit('click', isAccept)"
   >
     {{ textString }}
   </v-btn>
@@ -19,14 +19,6 @@ export default {
       stateString: 'Next',
       isAccept: true,
     }
-  },
-  methods: {
-    changeAcceptState() {
-      this.isAccept = true
-    },
-    changeRejectState() {
-      this.isAccept = false
-    },
   },
   computed: {
     colorString() {
@@ -42,6 +34,14 @@ export default {
       } else {
         return '---'
       }
+    },
+  },
+  methods: {
+    changeAcceptState() {
+      this.isAccept = true
+    },
+    changeRejectState() {
+      this.isAccept = false
     },
   },
 }

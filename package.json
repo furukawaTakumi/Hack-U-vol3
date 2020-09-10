@@ -9,14 +9,10 @@
     "export": "nuxt export",
     "serve": "nuxt serve",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lintfix": "eslint --fix --ext .js,.vue  --ignore-path .gitignore .",
     "lint": "npm run lint:js",
-    "lintfix": "eslint --fix",
-    "precommit": "npm run lint",
+    "precommit": "npm run lintfix",
     "generate": "nuxt generate"
-  },
-  "prettier": {
-    "singleQuote": true,
-    "semi": false
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",

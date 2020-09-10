@@ -3,7 +3,9 @@
     <h5 for="file-size" class="file-size-label">
       送信するファイルサイズを入力してください。
     </h5>
-    <h3 class="file-size-text">{{ fileSizeText }}</h3>
+    <h3 class="file-size-text">
+      {{ fileSizeText }}
+    </h3>
     <div class="file-size-input">
       <input
         v-model.number="fileSizeNum"
@@ -31,6 +33,7 @@ export default {
       },
     }
   },
+<<<<<<< HEAD
   methods: {
     getFileSize() {
       if (typeof this.fileSizeNum === 'string') return 0
@@ -38,6 +41,8 @@ export default {
       return this.fileSizeNum
     },
   },
+=======
+>>>>>>> master
   computed: {
     fileSizeText() {
       if (typeof this.fileSizeNum === 'string') {
@@ -56,6 +61,12 @@ export default {
         return `${(this.fileSizeNum / this.units.KB).toFixed(2)} KB`
       }
       return `${this.fileSizeNum} byte`
+    },
+  },
+  methods: {
+    getFileSize() {
+      if (typeof this.fileSizeNum === 'string') return 0
+      return this.fileSizeNum
     },
   },
 }
