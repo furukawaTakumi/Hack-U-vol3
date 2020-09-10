@@ -12,6 +12,7 @@
         class="num-input"
         placeholder="10000"
         min="0"
+        @input="$emit('input', getFileSize())"
       />
     </div>
   </div>
@@ -31,13 +32,6 @@ export default {
         PB: Math.pow(10, 15),
       },
     }
-  },
-  methods: {
-    getFileSize() {
-      if (typeof this.fileSizeNum === 'string') return 0
-      if (!Number.isSafeInteger(this.fileSizeNum)) return 0
-      return this.fileSizeNum
-    },
   },
   computed: {
     fileSizeText() {
@@ -62,6 +56,7 @@ export default {
   methods: {
     getFileSize() {
       if (typeof this.fileSizeNum === 'string') return 0
+      if (!Number.isSafeInteger(this.fileSizeNum)) return 0
       return this.fileSizeNum
     },
   },
