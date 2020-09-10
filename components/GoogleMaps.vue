@@ -9,6 +9,9 @@
       :placeholder="placeholder"
       @change="geoCording()"
     />
+    <div class="message" :class="messageColor">
+      {{ statusMessage }}
+    </div>
   </div>
 </template>
 
@@ -26,10 +29,30 @@ export default {
       googleMap: null,
       geocoder: null,
       addressText: '',
-      location: { lat: 35.4122, lng: 139.413 },
+      location: null,
       googleLib: null,
       marker: null,
+      responseStatus: 'NULL',
+      messageColor: 'red--text',
     }
+  },
+  computed: {
+    statusMessage() {
+      if ('OK' === this.responseStatus) return '入力完了。'
+      if (
+        'NULL' === this.responseStatus ||
+        'INVALID_REQUEST' === this.responseStatus
+      )
+        return '入力してください。'
+      if ('ZERO_RESULTS' === this.responseStatus)
+        return '住所に変換できません。'
+      if (
+        'UNKNOWN_ERROR' === this.responseStatus ||
+        'ERROR' === this.responseStatus
+      )
+        return 'リクエストに失敗しました。再試行してください'
+      return '予期せぬエラーが発生しました。'
+    },
   },
   mounted() {
     window.addEventListener('load', () => {
@@ -39,26 +62,32 @@ export default {
   methods: {
     initMap() {
       const mapElem = document.getElementById(this.googleMapId) // google の変数が未定義エラーとして怒られるため。
-      /* eslint-disable */ this.googleLib = google
+      /* eslint-disable */
+      const initLocation = { lat: 35.4122, lng: 139.413 }
+      this.googleLib = google
       this.googleMap = new this.googleLib.maps.Map(mapElem, {
-        center: this.location,
+        center: initLocation,
         zoom: 4,
       })
       this.geocoder = new this.googleLib.maps.Geocoder()
-      this.marker = new this.googleLib.maps.Marker({ position: this.location })
-      this.setLocation(this.location)
+      this.marker = new this.googleLib.maps.Marker({ position: initLocation })
+      this.marker.setMap(this.googleMap)
       /* eslint-enable */
     },
     geoCording() {
       this.geocoder.geocode(
         { address: this.addressText },
         (response, status) => {
+          this.responseStatus = status
           if (status === 'OK') {
             const location = response[0].geometry.location.toJSON()
             this.setLocation(location)
-            this.$emit('geoCording')
+            this.$emit('geoCording', { status, location })
+            this.messageColor = ''
           } else {
             console.error('一致する住所がありません')
+            this.$emit('geoCording', { status, location: null })
+            this.messageColor = 'red--text'
           }
         }
       )
@@ -88,12 +117,18 @@ export default {
 
 <style scoped>
 .map-frame {
-  width: 220px;
+  width: 540px;
 }
 .google-map {
-  height: 200px;
+  height: 400px;
 }
 .text-field {
   margin-top: 0.4em;
+}
+.message {
+  margin-left: 10px;
+  position: relative;
+  top: -20px;
+  font-size: 0.4em;
 }
 </style>

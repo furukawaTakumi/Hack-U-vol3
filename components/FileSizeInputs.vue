@@ -9,7 +9,6 @@
     <div class="file-size-input">
       <input
         v-model.number="fileSizeNum"
-        @input="$emit('input', getFileSize())"
         class="num-input"
         placeholder="10000"
         min="0"
