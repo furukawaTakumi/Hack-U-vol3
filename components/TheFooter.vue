@@ -1,17 +1,13 @@
 <template>
-  <v-footer
-    dark
-    padless
-  >
-    <v-card
-      class="flex"
-      flat
-      tile
-    >
+  <v-footer dark padless>
+    <v-card class="flex" flat tile>
       <v-card-title class="teal">
         <strong class="subheading">You're going to be the Internet!</strong>
         <v-spacer />
-        <v-btn href="https://github.com/furukawaTakumi/Hack-U-vol3" target="_blank">
+        <v-btn
+          href="https://github.com/furukawaTakumi/Hack-U-vol3"
+          target="_blank"
+        >
           <v-icon>mdi-github</v-icon>
         </v-btn>
         <v-btn href="https://twitter.com/set_official" target="_blank">
@@ -31,15 +27,9 @@
 <script>
 export default {
   data: () => ({
-    icons: [
-      'mdi-twitter',
-      'mdi-github',
-      'mdi-apple-safari'
-    ]
-  })
+    icons: ['mdi-twitter', 'mdi-github', 'mdi-apple-safari'],
+  }),
 }
-
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

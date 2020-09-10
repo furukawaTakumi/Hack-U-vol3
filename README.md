@@ -28,3 +28,6 @@ Google Mapを利用するためにはAPI KEYを環境変数に設定する必要
 touch .env 
 echo "NUXT_ENV_GMAP_API_KEY=API_KEY" >> .env
 ```
+
+## prettierを実行する手順
+`lintfix`コマンドで自動整形するようにしました。

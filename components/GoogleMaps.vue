@@ -17,32 +17,42 @@ export default {
   props: {
     placeholder: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       googleMapId: this.$uuid.v4(),
       googleMap: null,
       geocoder: null,
       addressText: '',
-      location: { lat: 35.4122, lng: 139.4130 },
+      location: { lat: 35.4122, lng: 139.413 },
       googleLib: null,
-      marker: null
+      marker: null,
     }
   },
-  mounted () {
+  mounted() {
     window.addEventListener('load', () => {
-      const mapElem = document.getElementById(this.googleMapId)
-      /* eslint-disable */ // google の変数が未定義エラーとして怒られるため。
-      this.googleLib = google
+      this.initMap()
+    })
+  },
+  methods: {
+    initMap() {
+      const mapElem = document.getElementById(this.googleMapId) // google の変数が未定義エラーとして怒られるため。
+      /* eslint-disable */ this.googleLib = google
       this.googleMap = new this.googleLib.maps.Map(mapElem, {
+<<<<<<< HEAD
         center: this.location,　zoom: 4
+=======
+        center: this.location,
+        zoom: 4,
+>>>>>>> master
       })
       this.geocoder = new this.googleLib.maps.Geocoder()
       this.marker = new this.googleLib.maps.Marker({ position: this.location })
       this.setLocation(this.location)
       /* eslint-enable */
+<<<<<<< HEAD
     })
   },
   methods: {
@@ -53,9 +63,24 @@ export default {
           this.setLocation(location)
         } else {
           console.error('一致する住所がありません')
-        }
-      })
+=======
     },
+    geoCording() {
+      this.geocoder.geocode(
+        { address: this.addressText },
+        (response, status) => {
+          if (status === 'OK') {
+            const location = response[0].geometry.location.toJSON()
+            this.setLocation(location)
+            this.$emit('geoCording')
+          } else {
+            console.error('一致する住所がありません')
+          }
+>>>>>>> master
+        }
+      )
+    },
+<<<<<<< HEAD
     reverseGeoCording (location) {
       console.log(location)
       this.geocoder.geocode({ location }, (results, status) => {
@@ -66,9 +91,12 @@ export default {
       })
     },
     getLocation () {
+=======
+    getLocation() {
+>>>>>>> master
       return this.location
     },
-    setLocation (location) {
+    setLocation(location) {
       this.location = location
       this.reverseGeoCording(location)
       this.googleMap.setCenter(location)
@@ -76,15 +104,17 @@ export default {
       this.marker = new this.googleLib.maps.Marker({ position: location })
       this.marker.setDraggable(true)
       this.marker.setMap(this.googleMap)
-    }
+    },
   },
-  head () {
+  head() {
     return {
       script: [
-        { src: `https://maps.googleapis.com/maps/api/js?key=${process.env.NUXT_ENV_GMAP_API_KEY}` }
-      ]
+        {
+          src: `https://maps.googleapis.com/maps/api/js?key=${process.env.NUXT_ENV_GMAP_API_KEY}`,
+        },
+      ],
     }
-  }
+  },
 }
 </script>
 

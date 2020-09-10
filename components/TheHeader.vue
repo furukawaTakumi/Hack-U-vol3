@@ -6,12 +6,14 @@
     tile
   >
     <nuxt-link to="">
-      <v-img src="https://picsum.photos/510/300?random" width="100" height="100" />
+      <v-img
+        src="https://picsum.photos/510/300?random"
+        width="100"
+        height="100"
+      />
     </nuxt-link>
     <h1>タイトル(予定地)</h1>
-    <v-btn :height="100" :width="100" tile>
-      Menu
-    </v-btn>
+    <v-btn :height="100" :width="100" tile> Menu </v-btn>
   </v-card>
 </template>
 
@@ -25,4 +27,5 @@ h1 {
   color: black;
   margin: 25px;
 }
-</style>>
+</style>
+>
