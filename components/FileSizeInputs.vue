@@ -9,6 +9,7 @@
     <div class="file-size-input">
       <input
         v-model.number="fileSizeNum"
+        @input="$emit('input', getFileSize())"
         class="num-input"
         placeholder="10000"
         min="0"
@@ -32,6 +33,16 @@ export default {
       },
     }
   },
+<<<<<<< HEAD
+  methods: {
+    getFileSize() {
+      if (typeof this.fileSizeNum === 'string') return 0
+      if (!Number.isSafeInteger(this.fileSizeNum)) return 0
+      return this.fileSizeNum
+    },
+  },
+=======
+>>>>>>> master
   computed: {
     fileSizeText() {
       if (typeof this.fileSizeNum === 'string') {
