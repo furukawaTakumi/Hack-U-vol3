@@ -27,7 +27,7 @@
       </v-row>
       <v-row v-show="stateItem[3].value <= nowState.value"></v-row>
     </v-container>
-    <div id="navigation-btn">
+    <div id="navigation-btn" v-if="isInputProcessing">
       <state-full-buttons @click="proceedInput" ref="stateFullBtn" />
     </div>
   </div>
@@ -66,6 +66,7 @@ export default {
         travelTime: null,
         speedValue: null,
       },
+      isInputProcessing: true,
     }
   },
   methods: {
@@ -90,6 +91,8 @@ export default {
     updateLineSpeed(speedValue) {
       this.inputsData.travelTime = speedValue
       this.$refs.stateFullBtn.changeAcceptState()
+      this.$emit('all-input-finished', this.inputsData)
+      this.isInputProcessing = false
     },
     proceedInput(btnState) {
       if (!btnState) {
