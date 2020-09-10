@@ -1,13 +1,7 @@
 <template>
-  <the-speed-mania />
+  <div />
 </template>
 
 <script>
-import TheSpeedMania from '@/components/TheSpeedMania'
-
-export default {
-  components: {
-    TheSpeedMania,
-  },
-}
+export default {}
 </script>
