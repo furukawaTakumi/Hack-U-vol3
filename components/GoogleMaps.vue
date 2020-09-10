@@ -2,9 +2,9 @@
   <div class="map-frame">
     <div :id="googleMapId" class="google-map" />
     <v-text-field
+      v-model="addressText"
       solo
       single-line
-      v-model="addressText"
       class="text-field"
       :placeholder="placeholder"
       @change="geoCording()"

@@ -5,8 +5,8 @@
         <v-col>
           <google-maps
             ref="originMap"
-            @geoCording="calcuTravelTime()"
             :placeholder="placeholders.origin"
+            @geoCording="calcuTravelTime()"
           />
         </v-col>
         <v-col class="arrow-col">
@@ -15,17 +15,17 @@
         <v-col>
           <google-maps
             ref="destinationMap"
-            @geoCording="calcuTravelTime()"
             :placeholder="placeholders.destination"
+            @geoCording="calcuTravelTime()"
           />
         </v-col>
       </v-row>
     </v-container>
     <v-container
-      @click="isOpenedModal = !isOpenedModal"
       light-blue--text
       text--lighten-4
       text-center
+      @click="isOpenedModal = !isOpenedModal"
     >
       △移動時間の詳細を表示する
     </v-container>
@@ -74,6 +74,36 @@ export default {
       isOpenedModal: false,
     }
   },
+  computed: {
+    distanceDetailText() {
+      if (this.responseState !== 'OK') return ''
+      return `${this.distanceObj.value / 1000} km`
+    },
+    durationDetailText() {
+      if (this.responseState !== 'OK') return ''
+      const hours = Math.floor(this.durationObj.value / 3600)
+      const minits = Math.floor((this.durationObj.value - hours * 3600) / 60)
+      const seconds = Math.floor(
+        this.durationObj.value - hours * 3600 - minits * 60
+      )
+      return `${hours}時間 ${minits}分 ${seconds}秒`
+    },
+    errorText() {
+      if (this.responseState === 'NULL') {
+        return `${this.placeholders.origin}、${this.placeholders.destination}が未入力です。`
+      }
+      if (this.responseState === 'NOT_FOUND') {
+        return `${this.placeholders.origin}、または${this.placeholders.destination}が見つかりませんでした。`
+      }
+      if (this.responseState === 'ZERO_RESULTS') {
+        return `ルートが見つかりませんでした。`
+      }
+      if (this.responseState === 'UNKNOWN_ERROR') {
+        return 'サーバエラーが発生しました。一定時間後にもう一度お試しください。'
+      }
+      return '想定外のエラーが発生'
+    },
+  },
   mounted() {
     window.addEventListener('load', () => {
       this.service = new google.maps.DirectionsService() // eslint-disable-line
@@ -107,36 +137,6 @@ export default {
         }
       )
       this.$refs.arrowSign.stopAnimation()
-    },
-  },
-  computed: {
-    distanceDetailText() {
-      if (this.responseState !== 'OK') return ''
-      return `${this.distanceObj.value / 1000} km`
-    },
-    durationDetailText() {
-      if (this.responseState !== 'OK') return ''
-      const hours = Math.floor(this.durationObj.value / 3600)
-      const minits = Math.floor((this.durationObj.value - hours * 3600) / 60)
-      const seconds = Math.floor(
-        this.durationObj.value - hours * 3600 - minits * 60
-      )
-      return `${hours}時間 ${minits}分 ${seconds}秒`
-    },
-    errorText() {
-      if (this.responseState === 'NULL') {
-        return `${this.placeholders.origin}、${this.placeholders.destination}が未入力です。`
-      }
-      if (this.responseState === 'NOT_FOUND') {
-        return `${this.placeholders.origin}、または${this.placeholders.destination}が見つかりませんでした。`
-      }
-      if (this.responseState === 'ZERO_RESULTS') {
-        return `ルートが見つかりませんでした。`
-      }
-      if (this.responseState === 'UNKNOWN_ERROR') {
-        return 'サーバエラーが発生しました。一定時間後にもう一度お試しください。'
-      }
-      return '想定外のエラーが発生'
     },
   },
   head() {
