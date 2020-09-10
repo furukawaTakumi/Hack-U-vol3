@@ -29,7 +29,7 @@ export default {
       googleMap: null,
       geocoder: null,
       addressText: '',
-      location: { lat: 35.4122, lng: 139.413 },
+      location: null,
       googleLib: null,
       marker: null,
       responseStatus: 'NULL',
@@ -63,14 +63,15 @@ export default {
     initMap() {
       const mapElem = document.getElementById(this.googleMapId) // google の変数が未定義エラーとして怒られるため。
       /* eslint-disable */
+      const initLocation = { lat: 35.4122, lng: 139.413 }
       this.googleLib = google
       this.googleMap = new this.googleLib.maps.Map(mapElem, {
-        center: this.location,
+        center: initLocation,
         zoom: 4,
       })
       this.geocoder = new this.googleLib.maps.Geocoder()
-      this.marker = new this.googleLib.maps.Marker({ position: this.location })
-      this.setLocation(this.location)
+      this.marker = new this.googleLib.maps.Marker({ position: initLocation })
+      this.marker.setMap(this.googleMap)
       /* eslint-enable */
     },
     geoCording() {
