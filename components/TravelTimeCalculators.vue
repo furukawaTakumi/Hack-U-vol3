@@ -6,7 +6,7 @@
           <google-maps
             ref="originMap"
             @geoCording="calcuTravelTime()"
-            :placeholder="'送りたいデータのある住所'"
+            :placeholder="placeholders.origin"
           />
         </v-col>
         <v-col class="arrow-col">
@@ -16,7 +16,7 @@
           <google-maps
             ref="destinationMap"
             @geoCording="calcuTravelTime()"
-            :placeholder="'データを送る住所'"
+            :placeholder="placeholders.destination"
           />
         </v-col>
       </v-row>
@@ -30,7 +30,7 @@
       △移動時間の詳細を表示する
     </v-container>
     <v-dialog v-model="isOpenedModal" class="detail-modal">
-      <v-card>
+      <v-card v-if="responseState === 'OK'">
         <v-card-title>移動時間の詳細</v-card-title>
         <v-card-text>
           <v-simple-table>
@@ -43,6 +43,12 @@
               <td>{{ durationDetailText }}</td>
             </tr>
           </v-simple-table>
+        </v-card-text>
+      </v-card>
+      <v-card v-else>
+        <v-card-title>エラーメッセージ</v-card-title>
+        <v-card-text>
+          {{ errorText }}
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -63,6 +69,8 @@ export default {
       service: null,
       distanceObj: { value: 0, text: '' },
       durationObj: { value: 0, text: '' },
+      responseState: 'NULL',
+      placeholders: { origin: '現在地', destination: 'データ送信先住所' },
       isOpenedModal: false,
     }
   },
@@ -81,11 +89,20 @@ export default {
           travelMode: 'DRIVING',
         },
         (response) => {
+          this.responseState = response.status
           if (response.status === 'OK') {
             this.durationObj = response.routes[0].legs[0].duration
             this.distanceObj = response.routes[0].legs[0].distance
-          } else if (response.status === 'ZERO_RESULTS') {
+            this.$emit('calcu-travel-time', {
+              status: this.responseState,
+              duration: this.durationObj,
+            })
+          } else {
             console.error('結果が取得できませんでした')
+            this.$emit('calcu-travel-time', {
+              status: this.responseState,
+              duration: this.durationObj,
+            })
           }
         }
       )
@@ -94,21 +111,32 @@ export default {
   },
   computed: {
     distanceDetailText() {
-      if (this.distanceObj.value === 0) {
-        return '交通手段がない、もしくは初期値のままです。'
-      }
+      if (this.responseState !== 'OK') return ''
       return `${this.distanceObj.value / 1000} km`
     },
     durationDetailText() {
-      if (this.durationObj.value === 0) {
-        return '交通手段がない、もしくは初期値のままです。'
-      }
+      if (this.responseState !== 'OK') return ''
       const hours = Math.floor(this.durationObj.value / 3600)
       const minits = Math.floor((this.durationObj.value - hours * 3600) / 60)
       const seconds = Math.floor(
         this.durationObj.value - hours * 3600 - minits * 60
       )
       return `${hours}時間 ${minits}分 ${seconds}秒`
+    },
+    errorText() {
+      if (this.responseState === 'NULL') {
+        return `${this.placeholders.origin}、${this.placeholders.destination}が未入力です。`
+      }
+      if (this.responseState === 'NOT_FOUND') {
+        return `${this.placeholders.origin}、または${this.placeholders.destination}が見つかりませんでした。`
+      }
+      if (this.responseState === 'ZERO_RESULTS') {
+        return `ルートが見つかりませんでした。`
+      }
+      if (this.responseState === 'UNKNOWN_ERROR') {
+        return 'サーバエラーが発生しました。一定時間後にもう一度お試しください。'
+      }
+      return '想定外のエラーが発生'
     },
   },
   head() {

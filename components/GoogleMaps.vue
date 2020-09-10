@@ -33,6 +33,11 @@ export default {
   },
   mounted() {
     window.addEventListener('load', () => {
+      this.initMap()
+    })
+  },
+  methods: {
+    initMap() {
       const mapElem = document.getElementById(this.googleMapId) // google の変数が未定義エラーとして怒られるため。
       /* eslint-disable */ this.googleLib = google
       this.googleMap = new this.googleLib.maps.Map(mapElem, {
@@ -43,9 +48,7 @@ export default {
       this.marker = new this.googleLib.maps.Marker({ position: this.location })
       this.setLocation(this.location)
       /* eslint-enable */
-    })
-  },
-  methods: {
+    },
     geoCording() {
       this.geocoder.geocode(
         { address: this.addressText },
