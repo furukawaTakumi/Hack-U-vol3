@@ -8,7 +8,11 @@
             ref="fileSizeInput"
             @input="updateFileSize"
           />
-          <file-selectors v-else :showFileChipCount="5" class="file-selector" />
+          <file-selectors
+            v-else
+            :show-file-chip-count="5"
+            class="file-selector"
+          />
         </div>
       </v-row>
       <v-row v-show="stateItem[1].value <= nowState.value" class="section">
@@ -25,10 +29,10 @@
           <speed-test @finish-speed-test="updateLineSpeed" />
         </div>
       </v-row>
-      <v-row v-show="stateItem[3].value <= nowState.value"></v-row>
+      <v-row v-show="stateItem[3].value <= nowState.value" />
     </v-container>
-    <div id="navigation-btn" v-if="isInputProcessing">
-      <state-full-buttons @click="proceedInput" ref="stateFullBtn" />
+    <div v-if="isInputProcessing" id="navigation-btn">
+      <state-full-buttons ref="stateFullBtn" @click="proceedInput" />
     </div>
   </div>
 </template>
@@ -48,9 +52,6 @@ export default {
     SpeedTest,
     StateFullButtons,
   },
-  mounted() {
-    this.$refs.stateFullBtn.changeRejectState()
-  },
   data() {
     return {
       nowState: { text: 'no-input', value: 1 },
@@ -68,6 +69,9 @@ export default {
       },
       isInputProcessing: true,
     }
+  },
+  mounted() {
+    this.$refs.stateFullBtn.changeRejectState()
   },
   methods: {
     updateFileSize(fileSize) {
