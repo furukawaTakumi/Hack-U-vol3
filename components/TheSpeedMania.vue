@@ -1,7 +1,11 @@
 <template>
   <div>
     <v-container>
-      <v-row v-show="stateItem[0].value <= nowState.value" class="section">
+      <v-row
+        v-show="stateItem[0].value <= nowState.value"
+        id="section-1"
+        class="section"
+      >
         <div class="file-size-input-section">
           <file-size-inputs
             v-if="inputFileFaild"
@@ -15,7 +19,11 @@
           />
         </div>
       </v-row>
-      <v-row v-show="stateItem[1].value <= nowState.value" class="section">
+      <v-row
+        v-show="stateItem[1].value <= nowState.value"
+        id="section-2"
+        class="section"
+      >
         <div class="travel-time-calc-section">
           <h5 class="travel-time-calc-label">
             現在地点・データ送信先入力してください。
@@ -23,7 +31,11 @@
           <travel-time-calculators @calcu-travel-time="updateTravelTime" />
         </div>
       </v-row>
-      <v-row v-show="stateItem[2].value <= nowState.value" class="section">
+      <v-row
+        v-show="stateItem[2].value <= nowState.value"
+        id="section-3"
+        class="section"
+      >
         <div class="speed-test-section">
           <h5 class="speed-test-label">回線速度を計測してください。</h5>
           <speed-test @finish-speed-test="updateLineSpeed" />
@@ -105,12 +117,32 @@ export default {
       }
       if (this.stateItem[0].value === this.nowState.value) {
         this.nowState = this.stateItem[1]
+        this.$nextTick(() => {
+          this.scrollNextInputs(this.stateItem[1].value)
+        })
       } else if (this.stateItem[1].value === this.nowState.value) {
         this.nowState = this.stateItem[2]
+        this.$nextTick(() => {
+          this.scrollNextInputs(this.stateItem[2].value)
+        })
       } else if (this.stateItem[2].value === this.nowState.value) {
         this.nowState = this.stateItem[3]
+        this.$nextTick(() => {
+          this.scrollNextInputs(this.stateItem[1].value)
+        })
       }
       this.$refs.stateFullBtn.changeRejectState()
+    },
+    scrollNextInputs(number) {
+      const id = `section-${number}`
+      const element = document.getElementById(id)
+      console.log(element)
+      const moveVal =
+        window.pageYOffset + element.getBoundingClientRect().bottom
+      console.log(moveVal)
+      console.log(window.pageYOffset)
+      console.log(element.getBoundingClientRect().bottom)
+      window.scrollTo(0, moveVal)
     },
   },
 }
