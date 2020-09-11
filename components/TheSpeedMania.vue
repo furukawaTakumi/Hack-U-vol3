@@ -31,17 +31,14 @@
           <travel-time-calculators @calcu-travel-time="updateTravelTime" />
         </div>
       </v-row>
-      <v-row
-        v-show="stateItem[2].value <= nowState.value"
-        id="section-3"
-        class="section"
-      >
-        <div class="speed-test-section">
-          <h5 class="speed-test-label">回線速度を計測してください。</h5>
-          <speed-test @finish-speed-test="updateLineSpeed" />
-        </div>
+      <v-row v-show="isInputsAllFilled" class="section">
+        <!-- result コンポーネントをここに入れる -->
+        <speed-test
+          id="speedTest"
+          ref="speedTest"
+          @finish-speed-test="setSpeedTestResult"
+        />
       </v-row>
-      <v-row v-show="stateItem[3].value <= nowState.value" />
     </v-container>
     <div v-if="isInputProcessing" id="navigation-btn">
       <state-full-buttons ref="stateFullBtn" @click="proceedInput" />
@@ -82,17 +79,27 @@ export default {
       isInputProcessing: true,
     }
   },
+  computed: {
+    isInputsAllFilled() {
+      return (
+        this.inputsData.fileSize > 0 &&
+        this.inputsData.travelTime > 0 &&
+        this.inputsData.speedValue > 0
+      )
+    },
+  },
   mounted() {
     this.$refs.stateFullBtn.changeRejectState()
+    this.$refs.speedTest.start()
   },
   methods: {
     updateFileSize(fileSize) {
       if (fileSize === 0) {
         this.$refs.stateFullBtn.changeRejectState()
-        this.fileSize = null
+        this.inputsData.fileSize = null
       } else {
         this.$refs.stateFullBtn.changeAcceptState()
-        this.fileSize = fileSize
+        this.inputsData.fileSize = fileSize
       }
     },
     updateTravelTime(travelTimeObj) {
@@ -104,11 +111,8 @@ export default {
         this.inputsData.travelTime = null
       }
     },
-    updateLineSpeed(speedValue) {
-      this.inputsData.travelTime = speedValue
-      this.$refs.stateFullBtn.changeAcceptState()
-      this.$emit('all-input-finished', this.inputsData)
-      this.isInputProcessing = false
+    setSpeedTestResult(speedValue) {
+      this.inputsData.speedValue = speedValue
     },
     proceedInput(btnState) {
       if (!btnState) {
@@ -122,26 +126,14 @@ export default {
         })
       } else if (this.stateItem[1].value === this.nowState.value) {
         this.nowState = this.stateItem[2]
-        this.$nextTick(() => {
-          this.scrollNextInputs(this.stateItem[2].value)
-        })
-      } else if (this.stateItem[2].value === this.nowState.value) {
-        this.nowState = this.stateItem[3]
-        this.$nextTick(() => {
-          this.scrollNextInputs(this.stateItem[1].value)
-        })
       }
       this.$refs.stateFullBtn.changeRejectState()
     },
     scrollNextInputs(number) {
       const id = `section-${number}`
       const element = document.getElementById(id)
-      console.log(element)
       const moveVal =
         window.pageYOffset + element.getBoundingClientRect().bottom
-      console.log(moveVal)
-      console.log(window.pageYOffset)
-      console.log(element.getBoundingClientRect().bottom)
       window.scrollTo(0, moveVal)
     },
   },
