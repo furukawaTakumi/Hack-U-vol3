@@ -1,7 +1,7 @@
 <template>
   <div>
     <h5 for="file-size" class="file-size-label">
-      送信するファイルサイズを入力してください。
+      送信したいファイルのサイズを入力してください。
     </h5>
     <h3 class="file-size-text">
       {{ fileSizeText }}
