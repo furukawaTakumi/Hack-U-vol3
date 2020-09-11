@@ -1,18 +1,17 @@
 <template>
-  <div class="frame">
-    <v-app id="inspire">
-      <v-data-table
-        :headers="headers"
-        :items="times"
-        hide-default-header
-        hide-default-footer
-        class="elevation-1"
-        width="320px"
-      />
-      <h1 class="result">
-        <span style="font-color=blue">{{ result }}</span>
-      </h1>
-    </v-app>
+  <div>
+    <h1 class="resultTxt">結果</h1>
+    <v-data-table
+      :headers="headers"
+      :items="times"
+      hide-default-header
+      hide-default-footer
+      class="elevation-1"
+      width="320px"
+    />
+    <h1 class="result">
+      <span style="font-color=blue">{{ result }}</span>
+    </h1>
   </div>
 </template>
 
@@ -109,6 +108,11 @@ export default {
 </script>
 
 <style scoped>
+.resultTxt {
+  font-size: 5em;
+  padding: 20px;
+  text-align: center;
+}
 .result {
   font-size: 5em;
   padding: 20px;
