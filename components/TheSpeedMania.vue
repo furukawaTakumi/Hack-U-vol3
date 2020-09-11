@@ -36,7 +36,7 @@
       <v-row v-show="isInputsAllFilled" class="section">
         <result ref="results" />
       </v-row>
-      <v-row v-show="isInputsAllFilled">
+      <v-row v-show="isInputsAllFilled" justify="center">
         <!-- result コンポーネントをここに入れる -->
         <speed-test
           id="speedTest"

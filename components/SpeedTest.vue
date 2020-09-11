@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div id="testTrigger">
       <canvas id="target" />
       <button id="startButton" @click="start">計測開始</button>
       <a> {{ valueSpeed }} Mbps</a>
