@@ -76,7 +76,7 @@ export default {
   justify-content: center;
 }
 .file-size-label {
-  font-size: 1.4em;
+  font-size: 2em;
   padding: 20px;
   text-align: center;
 }
