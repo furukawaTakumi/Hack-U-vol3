@@ -24,7 +24,7 @@
             </tr>
             <tr>
               <td>テスト回数</td>
-              <td>{{ testCnt }}/{{ maxTest }}回(現在/最大)</td>
+              <td>{{ maxTest }}回</td>
             </tr>
           </v-simple-table>
         </v-card-text>
