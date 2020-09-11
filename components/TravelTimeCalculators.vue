@@ -35,6 +35,14 @@
         <v-card-text>
           <v-simple-table>
             <tr>
+              <td>{{ placeholders.origin }}</td>
+              <td>{{ addressTexts.origin }}</td>
+            </tr>
+            <tr>
+              <td>{{ placeholders.destination }}</td>
+              <td>{{ addressTexts.destination }}</td>
+            </tr>
+            <tr>
               <td>移動距離</td>
               <td>{{ distanceDetailText }}</td>
             </tr>
@@ -71,6 +79,7 @@ export default {
       durationObj: { value: 0, text: '' },
       responseState: 'NULL',
       placeholders: { origin: '現在地', destination: 'データ送信先住所' },
+      addressTexts: { origin: null, destination: null },
       isOpenedModal: false,
     }
   },
@@ -112,6 +121,8 @@ export default {
   methods: {
     calcuTravelTime() {
       this.$refs.arrowSign.startAnimation()
+      this.addressTexts.origin = this.$refs.originMap.getAddressText()
+      this.addressTexts.destination = this.$refs.destinationMap.getAddressText()
       this.service.route(
         {
           origin: this.$refs.originMap.getLocation(),
