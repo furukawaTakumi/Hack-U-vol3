@@ -127,18 +127,18 @@ export default {
   height: 300px;
 }
 .travel-time-calc-label {
-  font-size: 1.4em;
+  font-size: 2em;
   text-align: center;
   margin: 20px;
 }
 .speed-test-label {
-  font-size: 1.4em;
+  font-size: 2em;
   text-align: center;
   margin: 20px 20px 40px;
 }
 #navigation-btn {
   position: fixed;
-  bottom: 200px;
-  right: 400px;
+  bottom: 385px;
+  right: 300px;
 }
 </style>
