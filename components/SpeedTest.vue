@@ -1,8 +1,10 @@
 <template>
   <div>
-    <canvas id="target" />
-    <button id="startButton" @click="start">計測開始</button>
-    <a> {{ valueSpeed }} Mbps</a>
+    <div id="testTrigger">
+      <canvas id="target" />
+      <button id="startButton" @click="start">計測開始</button>
+      <a> {{ valueSpeed }} Mbps</a>
+    </div>
     <v-container
       light-blue--text
       text--lighten-4
@@ -165,6 +167,9 @@ export default {
 </script>
 
 <style scoped>
+#testTrigger {
+  display: none;
+}
 #target {
   display: none;
 }
