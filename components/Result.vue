@@ -13,6 +13,8 @@ export default {
   }),
   methods: {
     resultJudge(fileSize, netSpeed, buturiTime) {
+      console.log('result')
+      if (fileSize === null || netSpeed === null || buturiTime === null) return
       const netTime = fileSize / netSpeed
       if (netTime >= buturiTime) {
         this.result = '記録媒体を直接持って行った方が早いです'
@@ -23,5 +25,11 @@ export default {
   },
 }
 </script>
-.result { font-size: 10em; padding: 20px; text-align: center; }
-<style scoped></style>
+
+<style scoped>
+.result {
+  font-size: 10em;
+  padding: 20px;
+  text-align: center;
+}
+</style>

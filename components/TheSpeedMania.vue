@@ -39,6 +39,9 @@
           @finish-speed-test="setSpeedTestResult"
         />
       </v-row>
+      <v-row v-show="isInputsAllFilled" class="section">
+        <result ref="results" />
+      </v-row>
     </v-container>
     <div v-if="isInputProcessing" id="navigation-btn">
       <state-full-buttons ref="stateFullBtn" @click="proceedInput" />
@@ -52,6 +55,7 @@ import FileSizeInputs from '@/components/FileSizeInputs'
 import FileSelectors from '@/components/FileSelectors'
 import SpeedTest from '@/components/SpeedTest'
 import StateFullButtons from '@/components/StateFullButtons'
+import Result from '@/components/Result'
 
 export default {
   components: {
@@ -60,6 +64,7 @@ export default {
     FileSelectors,
     SpeedTest,
     StateFullButtons,
+    Result,
   },
   data() {
     return {
@@ -77,10 +82,16 @@ export default {
         speedValue: null,
       },
       isInputProcessing: true,
+      isFinishedSpeedTest: false,
     }
   },
   computed: {
     isInputsAllFilled() {
+      try {
+        this.setResult()
+      } catch {
+        console.log('none loaded')
+      }
       return (
         this.inputsData.fileSize > 0 &&
         this.inputsData.travelTime > 0 &&
@@ -135,6 +146,13 @@ export default {
       const moveVal =
         window.pageYOffset + element.getBoundingClientRect().bottom
       window.scrollTo(0, moveVal)
+    },
+    setResult() {
+      this.$refs.results.resultJudge(
+        this.inputsData.fileSize,
+        this.inputsData.speedValue,
+        this.inputsData.travelTime
+      )
     },
   },
 }
