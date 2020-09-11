@@ -3,6 +3,31 @@
     <canvas id="target" />
     <button id="startButton" @click="start">計測開始</button>
     <a> {{ valueSpeed }} Mbps</a>
+    <v-container
+      light-blue--text
+      text--lighten-4
+      text-center
+      @click="isOpenedModal = !isOpenedModal"
+    >
+      △スピードテストの詳細を表示する
+    </v-container>
+    <v-dialog v-model="isOpenedModal" class="detail-modal">
+      <v-card>
+        <v-card-title>スピードテスト詳細</v-card-title>
+        <v-card-text>
+          <v-simple-table>
+            <tr>
+              <td>テストサイズ</td>
+              <td>{{ testSize }}MB</td>
+            </tr>
+            <tr>
+              <td>テスト回数</td>
+              <td>{{ testCnt }}/{{ maxTest }}回(現在/最大)</td>
+            </tr>
+          </v-simple-table>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -20,6 +45,9 @@ export default {
       maxTest: 5,
       testServer: 'http://speedtest02.azurewebsites.net',
       subTestServer: 'http://speedtest01.azurewebsites.net',
+      isOpenedModal: false,
+      testSize: 0,
+      errorText: 'テスト中です',
     }
   },
   methods: {
@@ -50,6 +78,7 @@ export default {
       const data = new FormData()
       data.append('photo', blob, 'image.png')
       console.log('post start(' + buffer.length / 1000000 + 'MB)')
+      this.testSize = buffer.length / 1000000
       // postの時間
       const sendDate = new Date().getTime()
       // 画像としてURLに載せてpost
