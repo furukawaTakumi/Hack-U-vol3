@@ -47,6 +47,7 @@ export default {
       subTestServer: 'http://speedtest01.azurewebsites.net',
       isOpenedModal: false,
       testSize: 0,
+      maxSizeKB: 32000,
       errorText: 'テスト中です',
     }
   },
@@ -66,8 +67,10 @@ export default {
       const type = 'image/png'
       let bin = ''
       // 適当な文字列を生成
-      for (let i = 0; i < 1000000; i++) {
-        bin = bin + 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+      for (let j = 0; j < this.maxSizeKB; j++) {
+        for (let i = 0; i < 100; i++) {
+          bin = bin + 'aaaaaaaaaa'
+        }
       }
 
       const buffer = new Uint8Array(bin.length)
