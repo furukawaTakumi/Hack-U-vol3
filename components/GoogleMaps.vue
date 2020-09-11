@@ -82,11 +82,15 @@ export default {
           if (status === 'OK') {
             const location = response[0].geometry.location.toJSON()
             this.setLocation(location)
-            this.$emit('geoCording', { status, location })
+            this.$emit('geoCording', {
+              status,
+              location,
+              address: this.addressText,
+            })
             this.messageColor = ''
           } else {
             console.error('一致する住所がありません')
-            this.$emit('geoCording', { status, location: null })
+            this.$emit('geoCording', { status, location: null, address: null })
             this.messageColor = 'red--text'
           }
         }
@@ -94,6 +98,9 @@ export default {
     },
     getLocation() {
       return this.location
+    },
+    getAddressText() {
+      return this.addressText
     },
     setLocation(location) {
       this.location = location

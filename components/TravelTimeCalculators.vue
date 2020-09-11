@@ -6,7 +6,7 @@
           <google-maps
             ref="originMap"
             :placeholder="placeholders.origin"
-            @geoCording="calcuTravelTime()"
+            @geoCording="updateOriginLocation"
           />
         </v-col>
         <v-col class="arrow-col">
@@ -16,7 +16,7 @@
           <google-maps
             ref="destinationMap"
             :placeholder="placeholders.destination"
-            @geoCording="calcuTravelTime()"
+            @geoCording="updateDestinationLocation"
           />
         </v-col>
       </v-row>
@@ -30,10 +30,24 @@
       △移動時間の詳細を表示する
     </v-container>
     <v-dialog v-model="isOpenedModal" class="detail-modal">
-      <v-card v-if="responseState === 'OK'">
+      <v-card
+        v-if="
+          updateState.origin === updateState.destination &&
+          updateState.origin === 'OK' &&
+          responseState === 'OK'
+        "
+      >
         <v-card-title>移動時間の詳細</v-card-title>
         <v-card-text>
           <v-simple-table>
+            <tr>
+              <td>{{ placeholders.origin }}</td>
+              <td>{{ addressTexts.origin }}</td>
+            </tr>
+            <tr>
+              <td>{{ placeholders.destination }}</td>
+              <td>{{ addressTexts.destination }}</td>
+            </tr>
             <tr>
               <td>移動距離</td>
               <td>{{ distanceDetailText }}</td>
@@ -69,8 +83,11 @@ export default {
       service: null,
       distanceObj: { value: 0, text: '' },
       durationObj: { value: 0, text: '' },
-      responseState: 'NULL',
+      responseState: 'MAP_ERROR',
       placeholders: { origin: '現在地', destination: 'データ送信先住所' },
+      addressTexts: { origin: null, destination: null },
+      locations: { origin: null, destination: null },
+      updateState: { origin: 'NULL', destination: 'NULL' },
       isOpenedModal: false,
     }
   },
@@ -89,9 +106,7 @@ export default {
       return `${hours}時間 ${minits}分 ${seconds}秒`
     },
     errorText() {
-      if (this.responseState === 'NULL') {
-        return `${this.placeholders.origin}、${this.placeholders.destination}が未入力です。`
-      }
+      if (this.responseState === 'OK') return ''
       if (this.responseState === 'NOT_FOUND') {
         return `${this.placeholders.origin}、または${this.placeholders.destination}が見つかりませんでした。`
       }
@@ -101,6 +116,8 @@ export default {
       if (this.responseState === 'UNKNOWN_ERROR') {
         return 'サーバエラーが発生しました。一定時間後にもう一度お試しください。'
       }
+      if (this.responseState === 'MAP_ERROR')
+        return `${this.placeholders.origin}、または、${this.placeholders.destination}の入力に問題があります。`
       return '想定外のエラーが発生'
     },
   },
@@ -110,12 +127,42 @@ export default {
     })
   },
   methods: {
+    updateOriginLocation(updateObj) {
+      this.updateState.origin = updateObj.status
+      if (updateObj.status === 'OK') {
+        this.addressTexts.origin = updateObj.address
+        this.locations.origin = updateObj.location
+        if (
+          'OK' === updateObj.status &&
+          updateObj.status === this.updateState.destination
+        ) {
+          this.calcuTravelTime()
+        }
+      } else {
+        this.changeToInvalidState()
+      }
+    },
+    updateDestinationLocation(updateObj) {
+      this.updateState.destination = updateObj.status
+      if (updateObj.status === 'OK') {
+        this.addressTexts.destination = updateObj.address
+        this.locations.destination = updateObj.location
+        if (
+          'OK' === updateObj.status &&
+          updateObj.status === this.updateState.origin
+        ) {
+          this.calcuTravelTime()
+        }
+      } else {
+        this.changeToInvalidState()
+      }
+    },
     calcuTravelTime() {
       this.$refs.arrowSign.startAnimation()
       this.service.route(
         {
-          origin: this.$refs.originMap.getLocation(),
-          destination: this.$refs.destinationMap.getLocation(),
+          origin: this.locations.origin,
+          destination: this.locations.destination,
           travelMode: 'DRIVING',
         },
         (response) => {
@@ -124,19 +171,32 @@ export default {
             this.durationObj = response.routes[0].legs[0].duration
             this.distanceObj = response.routes[0].legs[0].distance
             this.$emit('calcu-travel-time', {
-              status: this.responseState,
+              status: this.isAPIAllOk(),
               duration: this.durationObj,
             })
           } else {
             console.error('結果が取得できませんでした')
             this.$emit('calcu-travel-time', {
-              status: this.responseState,
-              duration: this.durationObj,
+              status: this.isAPIAllOk(),
+              duration: null,
             })
           }
         }
       )
       this.$refs.arrowSign.stopAnimation()
+    },
+    changeToInvalidState() {
+      this.responseState = 'MAP_ERROR'
+      this.addressTexts.destination = ''
+      this.locations.destination = null
+      this.$emit('calcu-travel-time', false)
+    },
+    isAPIAllOk() {
+      return (
+        this.responseState == 'OK' &&
+        this.updateState.origin == 'OK' &&
+        this.updateState.destination == 'OK'
+      )
     },
   },
   head() {
