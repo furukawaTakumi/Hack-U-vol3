@@ -49,6 +49,8 @@ export default {
         return `${(this.fileSizeNum / this.units.MB).toFixed(2)} MB`
       } else if (this.units.KB <= this.fileSizeNum) {
         return `${(this.fileSizeNum / this.units.KB).toFixed(2)} KB`
+      } else if (0 > this.fileSizeNum) {
+        return 'マイナスはダメです。'
       }
       return `${this.fileSizeNum} byte`
     },
