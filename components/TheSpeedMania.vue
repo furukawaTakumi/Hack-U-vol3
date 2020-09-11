@@ -1,7 +1,11 @@
 <template>
   <div>
     <v-container>
-      <v-row v-show="stateItem[0].value <= nowState.value" class="section">
+      <v-row
+        v-show="stateItem[0].value <= nowState.value"
+        id="section-1"
+        class="section"
+      >
         <div class="file-size-input-section">
           <file-size-inputs
             v-if="inputFileFaild"
@@ -15,7 +19,11 @@
           />
         </div>
       </v-row>
-      <v-row v-show="stateItem[1].value <= nowState.value" class="section">
+      <v-row
+        v-show="stateItem[1].value <= nowState.value"
+        id="section-2"
+        class="section"
+      >
         <div class="travel-time-calc-section">
           <h5 class="travel-time-calc-label">
             現在地点・データ送信先入力してください。
@@ -23,13 +31,14 @@
           <travel-time-calculators @calcu-travel-time="updateTravelTime" />
         </div>
       </v-row>
-      <v-row v-show="stateItem[2].value <= nowState.value" class="section">
-        <div class="speed-test-section">
-          <h5 class="speed-test-label">回線速度を計測してください。</h5>
-          <speed-test @finish-speed-test="updateLineSpeed" />
-        </div>
+      <v-row v-show="isInputsAllFilled" class="section">
+        <!-- result コンポーネントをここに入れる -->
+        <speed-test
+          id="speedTest"
+          ref="speedTest"
+          @finish-speed-test="setSpeedTestResult"
+        />
       </v-row>
-      <v-row v-show="stateItem[3].value <= nowState.value" />
     </v-container>
     <div v-if="isInputProcessing" id="navigation-btn">
       <state-full-buttons ref="stateFullBtn" @click="proceedInput" />
@@ -70,17 +79,27 @@ export default {
       isInputProcessing: true,
     }
   },
+  computed: {
+    isInputsAllFilled() {
+      return (
+        this.inputsData.fileSize > 0 &&
+        this.inputsData.travelTime > 0 &&
+        this.inputsData.speedValue > 0
+      )
+    },
+  },
   mounted() {
     this.$refs.stateFullBtn.changeRejectState()
+    this.$refs.speedTest.start()
   },
   methods: {
     updateFileSize(fileSize) {
       if (fileSize === 0) {
         this.$refs.stateFullBtn.changeRejectState()
-        this.fileSize = null
+        this.inputsData.fileSize = null
       } else {
         this.$refs.stateFullBtn.changeAcceptState()
-        this.fileSize = fileSize
+        this.inputsData.fileSize = fileSize
       }
     },
     updateTravelTime(travelTimeObj) {
@@ -92,11 +111,8 @@ export default {
         this.inputsData.travelTime = null
       }
     },
-    updateLineSpeed(speedValue) {
-      this.inputsData.travelTime = speedValue
-      this.$refs.stateFullBtn.changeAcceptState()
-      this.$emit('all-input-finished', this.inputsData)
-      this.isInputProcessing = false
+    setSpeedTestResult(speedValue) {
+      this.inputsData.speedValue = speedValue
     },
     proceedInput(btnState) {
       if (!btnState) {
@@ -105,12 +121,20 @@ export default {
       }
       if (this.stateItem[0].value === this.nowState.value) {
         this.nowState = this.stateItem[1]
+        this.$nextTick(() => {
+          this.scrollNextInputs(this.stateItem[1].value)
+        })
       } else if (this.stateItem[1].value === this.nowState.value) {
         this.nowState = this.stateItem[2]
-      } else if (this.stateItem[2].value === this.nowState.value) {
-        this.nowState = this.stateItem[3]
       }
       this.$refs.stateFullBtn.changeRejectState()
+    },
+    scrollNextInputs(number) {
+      const id = `section-${number}`
+      const element = document.getElementById(id)
+      const moveVal =
+        window.pageYOffset + element.getBoundingClientRect().bottom
+      window.scrollTo(0, moveVal)
     },
   },
 }
