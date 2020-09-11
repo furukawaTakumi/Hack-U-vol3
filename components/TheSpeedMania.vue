@@ -19,6 +19,7 @@
           />
         </div>
       </v-row>
+      <v-divider inset />
       <v-row
         v-show="stateItem[1].value <= nowState.value"
         id="section-2"
@@ -31,16 +32,17 @@
           <travel-time-calculators @calcu-travel-time="updateTravelTime" />
         </div>
       </v-row>
+      <v-divider inset />
       <v-row v-show="isInputsAllFilled" class="section">
+        <result ref="results" />
+      </v-row>
+      <v-row v-show="isInputsAllFilled" justify="center" class="result-section">
         <!-- result コンポーネントをここに入れる -->
         <speed-test
           id="speedTest"
           ref="speedTest"
           @finish-speed-test="setSpeedTestResult"
         />
-      </v-row>
-      <v-row v-show="isInputsAllFilled" class="section">
-        <result ref="results" />
       </v-row>
     </v-container>
     <div v-if="isInputProcessing" id="navigation-btn">
@@ -159,10 +161,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.section {
-  height: 70vh;
+.centerling {
   align-items: center;
   justify-content: center;
+}
+.section {
+  height: 70vh;
+  @extend .centerling;
+}
+.result-section {
+  @extend .centerling;
+  align-items: flex-end;
+  height: 4em;
+  padding: 30px;
 }
 .file-selector {
   width: 300px;

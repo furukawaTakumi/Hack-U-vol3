@@ -6,6 +6,7 @@
       <a> {{ valueSpeed }} Mbps</a>
     </div>
     <v-container
+      class="justify-center"
       light-blue--text
       text--lighten-4
       text-center
@@ -15,7 +16,7 @@
     </v-container>
     <v-dialog v-model="isOpenedModal" class="detail-modal">
       <v-card>
-        <v-card-title>スピードテスト詳細</v-card-title>
+        <v-card-title> スピードテスト詳細 </v-card-title>
         <v-card-text>
           <v-simple-table>
             <tr>
@@ -166,7 +167,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #testTrigger {
   display: none;
 }
