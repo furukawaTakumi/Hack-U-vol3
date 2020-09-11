@@ -1,7 +1,7 @@
 <template>
   <div>
     <canvas id="target" />
-    <button id="startButton" @click="test">計測開始</button>
+    <button id="startButton" @click="start">計測開始</button>
     <a> {{ valueSpeed }} Mbps</a>
   </div>
 </template>
@@ -17,12 +17,18 @@ export default {
       valueSpeed: 0,
       inTest: false,
       testCnt: 0,
-      maxTest: 4,
+      maxTest: 5,
       testServer: 'http://speedtest02.azurewebsites.net',
       subTestServer: 'http://speedtest01.azurewebsites.net',
     }
   },
   methods: {
+    start() {
+      if (this.inTest) {
+        return
+      }
+      this.test()
+    },
     async test() {
       if (this.testCnt === 0) {
         this.inTestUI()
@@ -33,7 +39,7 @@ export default {
       let bin = ''
       // 適当な文字列を生成
       for (let i = 0; i < 1000000; i++) {
-        bin = bin + 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+        bin = bin + 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
       }
 
       const buffer = new Uint8Array(bin.length)
@@ -64,19 +70,30 @@ export default {
           // mbps単位
           const currentSpeed = _mb / _toServerTime
 
-          this.speeds.push(currentSpeed)
+          if (this.testCnt !== 0) {
+            this.speeds.push(currentSpeed)
 
-          let total = 0
+            let total = 0
 
-          for (let i = 0; i < this.speeds.length; i++) {
-            total += this.speeds[i]
+            for (let i = 0; i < this.speeds.length; i++) {
+              total += this.speeds[i]
+            }
+
+            this.speed = total / this.speeds.length
           }
-
-          this.speed = total / this.speeds.length
 
           // 切り捨て
           this.valueSpeed = this.speed.toFixed(2)
-          console.log('post success(' + currentSpeed + '>' + this.speed + ')')
+          console.log(
+            'post success(cnt' +
+              ': ' +
+              this.testCnt +
+              ' ' +
+              currentSpeed +
+              '>' +
+              this.speed +
+              ')'
+          )
 
           if (this.maxTest - 1 >= this.testCnt) {
             this.testCnt++
