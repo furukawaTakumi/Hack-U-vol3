@@ -84,7 +84,7 @@ export default {
       }
     },
     updateTravelTime(travelTimeObj) {
-      if (travelTimeObj.status === 'OK') {
+      if (travelTimeObj.status) {
         this.$refs.stateFullBtn.changeAcceptState()
         this.inputsData.travelTime = travelTimeObj.duration.value
       } else {
