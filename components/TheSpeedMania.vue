@@ -180,7 +180,7 @@ export default {
 }
 #navigation-btn {
   position: fixed;
-  bottom: 200px;
-  right: 400px;
+  bottom: 100px;
+  left: 250px;
 }
 </style>
