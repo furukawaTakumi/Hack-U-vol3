@@ -1,17 +1,19 @@
 <template>
   <div>
     <h1 class="resultTxt">結果</h1>
-    <v-data-table
-      :headers="headers"
-      :items="times"
-      hide-default-header
-      hide-default-footer
-      class="elevation-1"
-      width="320px"
-    />
     <h1 class="result">
       <span style="font-color=blue">{{ result }}</span>
     </h1>
+    <div class="frame">
+      <v-data-table
+        :headers="headers"
+        :items="times"
+        hide-default-header
+        hide-default-footer
+        class="elevation-1"
+        width="320px"
+      />
+    </div>
   </div>
 </template>
 
@@ -108,6 +110,10 @@ export default {
 </script>
 
 <style scoped>
+.frame {
+  display: flex;
+  justify-content: center;
+}
 .resultTxt {
   font-size: 5em;
   padding: 20px;
@@ -117,5 +123,8 @@ export default {
   font-size: 5em;
   padding: 20px;
   text-align: center;
+}
+.elevation-1 {
+  width: 600px;
 }
 </style>

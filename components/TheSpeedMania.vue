@@ -36,7 +36,7 @@
       <v-row v-show="isInputsAllFilled" class="section">
         <result ref="results" />
       </v-row>
-      <v-row v-show="isInputsAllFilled" justify="center">
+      <v-row v-show="isInputsAllFilled" justify="center" class="result-section">
         <!-- result コンポーネントをここに入れる -->
         <speed-test
           id="speedTest"
@@ -161,10 +161,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.section {
-  height: 70vh;
+.centerling {
   align-items: center;
   justify-content: center;
+}
+.section {
+  height: 70vh;
+  @extend .centerling;
+}
+.result-section {
+  @extend .centerling;
+  align-items: flex-end;
+  height: 4em;
+  padding: 30px;
 }
 .file-selector {
   width: 300px;
