@@ -191,7 +191,7 @@ export default {
 }
 #navigation-btn {
   position: fixed;
-  bottom: 100px;
+  bottom: 180px;
   left: 250px;
 }
 </style>
