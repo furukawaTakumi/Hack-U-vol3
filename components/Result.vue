@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="frame">
     <h1 class="result">
       <span style="font-color=blue">{{ result }}</span>
     </h1>
@@ -28,7 +28,7 @@ export default {
 
 <style scoped>
 .result {
-  font-size: 10em;
+  font-size: 7em;
   padding: 20px;
   text-align: center;
 }
