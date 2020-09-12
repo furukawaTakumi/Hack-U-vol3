@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div id="in-test-value">
+      <in-test-value />
+    </div>
     <v-container>
       <v-row
         v-show="stateItem[0].value <= nowState.value"
@@ -58,6 +61,7 @@ import FileSelectors from '@/components/FileSelectors'
 import SpeedTest from '@/components/SpeedTest'
 import StateFullButtons from '@/components/StateFullButtons'
 import Result from '@/components/Result'
+import InTestValue from '@/components/InTestValue'
 
 export default {
   components: {
@@ -67,6 +71,7 @@ export default {
     SpeedTest,
     StateFullButtons,
     Result,
+    InTestValue,
   },
   data() {
     return {
@@ -193,5 +198,13 @@ export default {
   position: fixed;
   bottom: 180px;
   left: 250px;
+}
+#in-test-value {
+  position: relative;
+  background-color: rgb(179, 179, 179);
+  transform: rotateZ(-90deg);
+  width: 100vh;
+  height: 150px;
+  left: calc(100vh - 150px);
 }
 </style>
