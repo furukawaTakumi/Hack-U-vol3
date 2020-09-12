@@ -29,6 +29,9 @@
           <h5 class="travel-time-calc-label">
             現在地点・データ送信先入力してください。
           </h5>
+          <h5 class="travel-time-calc-label">
+            下部が計測完了になるまでお待ちください。
+          </h5>
           <travel-time-calculators @calcu-travel-time="updateTravelTime" />
         </div>
       </v-row>
