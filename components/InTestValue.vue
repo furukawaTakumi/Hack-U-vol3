@@ -10,7 +10,7 @@
 <script>
 export default {
   data: () => ({
-    valueText: '回線速度測定中',
+    valueText: '回線速度測定中・・・',
     inTestText: '回線速度測定中',
     finishedText: '測定完了',
     inTest: false,
@@ -34,6 +34,8 @@ export default {
   width: 100%;
 }
 #text {
-  font-size: 32pt;
+  font-size: 16pt;
+  background-color: white;
+  height: 100%;
 }
 </style>

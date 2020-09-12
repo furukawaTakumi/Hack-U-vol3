@@ -204,6 +204,6 @@ export default {
   position: fixeds;
   background-color: rgb(179, 179, 179);
   width: 100%;
-  height: 75px;
+  height: 30px;
 }
 </style>
