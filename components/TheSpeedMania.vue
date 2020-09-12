@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div id="in-test-value">
-      <in-test-value />
-    </div>
     <v-container>
       <v-row
         v-show="stateItem[0].value <= nowState.value"
@@ -50,6 +47,9 @@
     </v-container>
     <div v-if="isInputProcessing" id="navigation-btn">
       <state-full-buttons ref="stateFullBtn" @click="proceedInput" />
+    </div>
+    <div id="in-test-value">
+      <in-test-value ref="inTestValue" />
     </div>
   </div>
 </template>
@@ -131,6 +131,7 @@ export default {
     },
     setSpeedTestResult(speedValue) {
       this.inputsData.speedValue = speedValue
+      this.$refs.inTestValue.setTestFlag(false)
     },
     proceedInput(btnState) {
       if (!btnState) {
@@ -177,7 +178,7 @@ export default {
 .result-section {
   @extend .centerling;
   align-items: flex-end;
-  height: 4em;
+  height: 8em;
   padding: 30px;
 }
 .file-selector {
@@ -200,11 +201,9 @@ export default {
   left: 250px;
 }
 #in-test-value {
-  position: relative;
+  position: fixeds;
   background-color: rgb(179, 179, 179);
-  transform: rotateZ(-90deg);
-  width: 100vh;
-  height: 150px;
-  left: calc(100vh - 150px);
+  width: 100%;
+  height: 75px;
 }
 </style>
