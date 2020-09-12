@@ -3,6 +3,9 @@
     <h5 for="file-size" class="file-size-label">
       送信したいファイルのサイズを入力してください。
     </h5>
+    <h5 for="file-size" class="file-size-label">
+      入力後Nextボタンを押してください。
+    </h5>
     <h3 class="file-size-text">
       {{ fileSizeText }}
     </h3>

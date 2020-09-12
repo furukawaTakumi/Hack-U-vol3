@@ -29,6 +29,9 @@
           <h5 class="travel-time-calc-label">
             現在地点・データ送信先入力してください。
           </h5>
+          <h5 class="travel-time-calc-label">
+            下部が計測完了になるまでお待ちください。
+          </h5>
           <travel-time-calculators @calcu-travel-time="updateTravelTime" />
         </div>
       </v-row>
@@ -48,6 +51,9 @@
     <div v-if="isInputProcessing" id="navigation-btn">
       <state-full-buttons ref="stateFullBtn" @click="proceedInput" />
     </div>
+    <div id="in-test-value">
+      <in-test-value ref="inTestValue" />
+    </div>
   </div>
 </template>
 
@@ -58,6 +64,7 @@ import FileSelectors from '@/components/FileSelectors'
 import SpeedTest from '@/components/SpeedTest'
 import StateFullButtons from '@/components/StateFullButtons'
 import Result from '@/components/Result'
+import InTestValue from '@/components/InTestValue'
 
 export default {
   components: {
@@ -67,6 +74,7 @@ export default {
     SpeedTest,
     StateFullButtons,
     Result,
+    InTestValue,
   },
   data() {
     return {
@@ -126,6 +134,7 @@ export default {
     },
     setSpeedTestResult(speedValue) {
       this.inputsData.speedValue = speedValue
+      this.$refs.inTestValue.setTestFlag(false)
     },
     proceedInput(btnState) {
       if (!btnState) {
@@ -172,7 +181,7 @@ export default {
 .result-section {
   @extend .centerling;
   align-items: flex-end;
-  height: 4em;
+  height: 8em;
   padding: 30px;
 }
 .file-selector {
@@ -193,5 +202,11 @@ export default {
   position: fixed;
   bottom: 180px;
   left: 250px;
+}
+#in-test-value {
+  position: fixeds;
+  background-color: rgb(179, 179, 179);
+  width: 100%;
+  height: 30px;
 }
 </style>
