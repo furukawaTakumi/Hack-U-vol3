@@ -46,7 +46,11 @@ export default {
       this.netTime = parseInt(this.netTime)
       console.log(this.netTime + ',' + buturiTime)
       this.times[0].time = this.time2Text(this.buturiTime)
-      this.times[1].time = this.time2Text(this.netTime)
+      if (this.netTime < 1) {
+        this.times[1].time = '1秒未満'
+      } else {
+        this.times[1].time = this.time2Text(this.netTime)
+      }
       if (this.netTime >= buturiTime) {
         this.result = '記録媒体を直接持って行った方が早いでしょう'
       } else if (this.netTime < buturiTime) {
